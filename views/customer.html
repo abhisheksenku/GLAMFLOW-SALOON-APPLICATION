@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlamFlow Salon Dashboard</title>
+    <link rel="stylesheet" href="/css/customer.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">GF</div>
+        <div>
+          <h1 style="font-size: 15px; margin: 0">GlamFlow</h1>
+          <div style="font-size: 12px; color: var(--muted)">Dashboard</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#" data-target="home" class="active">Home</a>
+        <a href="#" data-target="profile">Profile</a>
+        <a href="#" data-target="booking">Booking</a>
+        <a href="#" data-target="payments">Payments</a>
+        <a href="#" data-target="services">Services</a>
+        <a href="#" data-target="feedback">Feedback</a>
+      </nav>
+    </aside>
+    <div class="overlay"></div>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="top-left">
+          <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <nav id="breadcrumbs" class="breadcrumbs" aria-label="breadcrumb">
+            <span>Dashboard</span>
+          </nav>
+          <div class="brand-top" aria-hidden="true">
+            <div
+              class="logo"
+              style="width: 40px; height: 40px; font-size: 14px"
+            >
+              GF
+            </div>
+            <div>
+              <h1 style="font-size: 15px; margin: 0">GlamFlow</h1>
+              <div style="font-size: 12px; color: var(--muted)">
+                Salon Dashboard
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center">
+          <div class="muted" id="dateTime"></div>
+          <button class="btn logout">Logout</button>
+        </div>
+      </div>
+
+      <section id="home-content" class="page-content active">
+        <div class="welcome" style="margin-bottom: 24px">
+          <div class="avatar" id="avatar">J</div>
+          <div>
+            <h2 id="username">Welcome back, Jheepasani 👋</h2>
+            <p id="subText">Here's what's happening at your salon today.</p>
+          </div>
+        </div>
+        <section class="cards" aria-label="Quick statistics">
+          <div class="card">
+            <div class="k">Upcoming Appointments</div>
+            <div class="v" id="upcomingCount">—</div>
+            <div class="muted">Next: <span id="nextAppt">—</span></div>
+          </div>
+          <div class="card">
+            <div class="k">Total Payments (This Month)</div>
+            <div class="v" id="pendingPayments">—</div>
+            <div class="muted">recent payments</div>
+          </div>
+          <div class="card">
+            <div class="k">New Reviews</div>
+            <div class="v" id="newReviews">—</div>
+            <div class="muted">
+              Average rating: <span id="avgRatingHome">—</span>
+            </div>
+          </div>
+        </section>
+        <section class="shortcuts" aria-label="Shortcuts">
+          <button class="btn" data-target="booking">Book Appointment</button>
+          <button class="btn secondary" data-target="services">
+            View Services
+          </button>
+          <button class="btn secondary" data-target="payments">
+            Payment History
+          </button>
+          <button class="btn secondary" data-target="feedback">
+            Write a Review
+          </button>
+        </section>
+      </section>
+
+      <section id="profile-content" class="page-content">
+        <div class="section">
+          <h2>My Profile</h2>
+          <div class="profile-pic" id="profileAvatar">
+            <span id="avatarText">J</span>
+          </div>
+          <form id="profileForm">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" value="Jheepasani" disabled />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                value="user.jheepasani@example.com"
+                disabled
+              />
+            </div>
+            <div class="form-group">
+              <label for="mobile">Mobile</label>
+              <input type="tel" id="mobile" value="+91 9876543210" disabled />
+            </div>
+            <div class="actions">
+              <button type="button" id="editBtn" class="btn">Edit</button>
+              <button
+                type="submit"
+                id="saveBtn"
+                class="btn secondary"
+                style="display: none"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="section">
+          <h2>Password Reset</h2>
+          <form id="passwordForm">
+            <div class="form-group">
+              <label for="currentPassword">Current Password</label>
+              <input type="password" id="currentPassword" />
+            </div>
+            <div class="form-group">
+              <label for="newPassword">New Password</label>
+              <input type="password" id="newPassword" />
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm New Password</label>
+              <input type="password" id="confirmPassword" />
+            </div>
+            <button type="submit" class="btn">Update Password</button>
+          </form>
+        </div>
+        <div class="section danger-zone">
+          <h2>Danger Zone</h2>
+          <p>Deleting your account is permanent and cannot be undone.</p>
+          <button id="showDeleteModalBtn" class="btn danger">
+            Delete My Account
+          </button>
+        </div>
+      </section>
+
+      <section id="booking-content" class="page-content">
+        <div class="section">
+          <h2>Book an Appointment</h2>
+          <form id="bookingForm">
+            <div class="form-group">
+              <label>Select Service</label>
+              <select id="service">
+                <option>Haircut</option>
+                <option>Facial</option>
+                <option>Spa</option>
+                <option>Manicure</option>
+                <option>Pedicure</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Choose Staff (optional)</label>
+              <select id="staff">
+                <option>Any Available</option>
+                <option>Riya</option>
+                <option>Arjun</option>
+                <option>Megha</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Select Date</label>
+              <input type="date" id="date" />
+            </div>
+            <div class="form-group">
+              <label>Available Slots</label>
+              <div class="slots" id="slots">
+                <div class="slot">10:00 AM</div>
+                <div class="slot">11:30 AM</div>
+                <div class="slot">01:00 PM</div>
+                <div class="slot">02:30 PM</div>
+                <div class="slot">04:00 PM</div>
+                <div class="slot">05:30 PM</div>
+              </div>
+            </div>
+            <div class="actions">
+              <button type="submit" class="btn">Book Now</button>
+            </div>
+          </form>
+        </div>
+        <div class="section">
+          <h2>Upcoming Appointments</h2>
+          <div class="appt-list" id="apptList">
+            <!-- JS will render top 3 here -->
+          </div>
+          <button
+            id="viewAllBookingsBtn"
+            class="btn secondary"
+            style="margin-top: 16px"
+          >
+            View All My Appointments
+          </button>
+        </div>
+      </section>
+      <section id="all-appointments-content" class="page-content">
+        <div class="section">
+          <button
+            id="backToBookingBtn"
+            class="btn secondary"
+            style="margin-bottom: 24px"
+          >
+            &larr; Back to Booking Page
+          </button>
+          <h2>My Appointments</h2>
+
+          <!-- We'll add search here later -->
+
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Service</th>
+                <th>Staff</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="allAppointmentsTable">
+              <!-- JS renders paginated list here -->
+            </tbody>
+          </table>
+          <div id="appointmentsPagination" class="pagination-controls"></div>
+        </div>
+      </section>
+      <section id="payments-content" class="page-content">
+        <div class="section">
+          <h2>Payment History</h2>
+          <div class="filters">
+            <input type="date" id="filterDate" />
+            <button id="filterPaymentsBtn" class="btn">Filter</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Service</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Invoice</th>
+              </tr>
+            </thead>
+            <tbody id="paymentTable"></tbody>
+          </table>
+          <div id="paymentsPagination" class="pagination-controls"></div>
+        </div>
+      </section>
+
+      <section id="services-content" class="page-content">
+        <div class="section">
+          <h2>Our Services</h2>
+
+          <!-- search bar -->
+          <input
+            type="text"
+            id="serviceSearchInput"
+            placeholder="Search services..."
+            style="margin-bottom: 16px"
+          />
+
+          <!-- service cards container -->
+          <div id="servicesList" class="services"></div>
+
+          <!-- pagination -->
+          <div id="servicesPagination" class="pagination-controls"></div>
+        </div>
+      </section>
+
+      <section id="feedback-content" class="page-content">
+        <div class="section">
+          <h2>Leave a Review</h2>
+          <p>Review your past appointments to help us improve.</p>
+          <div id="reviewableBookingsList" class="review-list">
+            <p>Loading appointments you can review...</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>My Past Reviews</h2>
+          <div id="myPastReviewsList" class="review-list">
+            <p>Loading your past reviews...</p>
+          </div>
+        </div>
+      </section>
+      <section id="all-reviews-content" class="page-content">
+        <div class="section">
+          <button
+            id="backToFeedbackBtn"
+            class="btn secondary"
+            style="margin-bottom: 24px"
+          >
+            ← Back to Feedback
+          </button>
+
+          <h2>All My Reviews</h2>
+
+          <div id="allReviewsList"></div>
+
+          <div id="reviewsPagination" class="pagination-controls"></div>
+        </div>
+      </section>
+
+      <div id="chat-widget-container">
+        <!-- The button to open the chat -->
+        <button id="chat-open-btn" class="chat-bubble">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 12.76c.243 1.27 1.03 2.4 2.11 3.093l.3.188A19.5 19.5 0 0 0 12 19.5c.99 0 1.953-.138 2.86-.399l.3-.093a6.8 6.8 0 0 0 2.11-3.093m0-3.48a6.8 6.8 0 0 0-2.11-3.093l-.3-.093A19.5 19.5 0 0 0 12 4.5c-.99 0-1.953.138-2.86.399l-.3.093a6.8 6.8 0 0 0-2.11 3.093m16.5 3.48 0 0-.001.001 0 0 0 0m-16.5 0 0 0 .001.001 0 0 0 0M12 21a8.25 8.25 0 0 0 8.25-8.25c0-1.55-.422-2.99-.133-4.329a.75.75 0 0 0-1.21-.523l-.31.31a19.488 19.488 0 0 1-3.606 2.153 6.73 6.73 0 0 1-3.04.628 6.73 6.73 0 0 1-3.04-.628A19.488 19.488 0 0 1 5.023 7.7a.75.75 0 0 0-1.21.523C3.672 9.56 3.25 10.999 3.25 12.54A8.25 8.25 0 0 0 12 21Z"
+            />
+          </svg>
+        </button>
+
+        <!-- The chat modal itself (hidden by default) -->
+        <div id="chat-modal" class="chat-modal-hidden">
+          <div class="chat-header">
+            <h3>Live Support Chat</h3>
+            <button id="chat-close-btn" class="chat-close">&times;</button>
+          </div>
+          <div id="chat-messages" class="chat-messages">
+            <!-- Messages will be added here -->
+            <div class="message-support">
+              Welcome! How can we help you today?
+            </div>
+          </div>
+          <form id="chat-form" class="chat-form">
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Type your message..."
+              autocomplete="off"
+            />
+            <button type="submit" class="btn-send">Send</button>
+          </form>
+        </div>
+      </div>
+    </main>
+    <div id="deleteAccountModal" class="modal-overlay">
+      <div class="modal-card">
+        <h3>Delete Your Account?</h3>
+        <p>
+          This action is irreversible. To confirm, please enter your password.
+        </p>
+        <form id="deleteAccountForm">
+          <div class="form-group">
+            <label for="deletePassword">Password</label>
+            <input type="password" id="deletePassword" required />
+          </div>
+          <div class="modal-actions">
+            <button type="button" id="cancelDeleteBtn" class="btn secondary">
+              Cancel
+            </button>
+            <button type="submit" id="confirmDeleteBtn" class="btn danger">
+              Delete Account
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="reviewModal" class="modal-overlay">
+      <div class="modal-card">
+        <button id="reviewModalClose" class="modal-close-btn">&times;</button>
+        <h3 id="reviewModalTitle">Leave a Review</h3>
+        <p id="reviewModalSubtitle">For your appointment on...</p>
+
+        <form id="reviewForm">
+          <input type="hidden" id="reviewBookingId" />
+          <div class="form-group">
+            <label>Your Rating (1-5 stars)</label>
+            <div class="stars" id="reviewModalStars">
+              <span class="star" data-value="1">&#9733;</span>
+              <span class="star" data-value="2">&#9733;</span>
+              <span class="star" data-value="3">&#9733;</span>
+              <span class="star" data-value="4">&#9733;</span>
+              <span class="star" data-value="5">&#9733;</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="reviewComment">Your Comments (Optional)</label>
+            <textarea id="reviewComment" rows="4"></textarea>
+          </div>
+          <div class="modal-actions">
+            <button type="button" id="reviewModalCancel" class="btn secondary">
+              Cancel
+            </button>
+            <button type="submit" id="reviewSubmitBtn" class="btn">Submit Review</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="confirmationModal" class="modal-overlay">
+      <div class="modal-card" style="max-width: 400px">
+        <div class="modal-header">
+          <h3 id="confirmTitle">Confirm Action</h3>
+        </div>
+        <div class="modal-body">
+          <p id="confirmMessage">Are you sure you want to proceed?</p>
+        </div>
+        <div
+          class="modal-footer"
+          style="
+            padding: 16px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+          "
+        >
+          <button id="cancelBtn" class="btn secondary">Cancel</button>
+          <button id="confirmBtn" class="btn danger">Confirm</button>
+        </div>
+      </div>
+    </div>
+    <div id="notificationToast" class="toast">
+      <span id="notificationMessage"></span>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+    <script src="/js/config.js"></script>
+    <script src="/js/customer.js"></script>
+  </body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to GlamFlow - Your Modern Salon Experience</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Custom styles */
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .font-serif {
+      font-family: 'Playfair Display', serif;
+    }
+    .hero-bg {
+      background-color: #fce4ec; /* Light pink background */
+    }
+    .primary-btn {
+      background-color: #ff6b81; /* GlamFlow primary pink */
+      color: white;
+    }
+    .primary-btn:hover {
+      background-color: #e65a70;
+    }
+    .secondary-btn {
+      background-color: white;
+      color: #ff6b81;
+      border: 1px solid #ff6b81;
+    }
+    .secondary-btn:hover {
+      background-color: #fff8f9;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+
+  <!-- Header -->
+  <header class="absolute top-0 left-0 w-full z-10 py-6 px-4 md:px-12">
+    <div class="container mx-auto flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+        <span class="flex items-center justify-center w-10 h-10 bg-pink-600 text-white font-bold rounded-lg text-lg">GF</span>
+        <span class="font-serif text-2xl font-bold text-gray-900">GlamFlow</span>
+      </div>
+      
+      <!-- Navigation -->
+      <nav class="space-x-4">
+        <a href="/login" class="secondary-btn font-medium py-2 px-5 rounded-lg text-sm transition-all duration-300">
+          Login
+        </a>
+        <a href="/signup" class="primary-btn font-medium py-2 px-5 rounded-lg text-sm shadow-lg shadow-pink-500/30 transition-all duration-300">
+          Sign Up
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-bg pt-40 pb-24 px-4">
+      <div class="container mx-auto text-center max-w-3xl">
+        <h1 class="font-serif text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+          Modern Salon Management, Simplified.
+        </h1>
+        <p class="mt-6 text-lg text-gray-700 max-w-xl mx-auto">
+          Welcome to GlamFlow, the all-in-one platform for booking appointments, managing your schedule, and connecting with expert stylists.
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+          <a href="/signup" target="_blank" class="primary-btn font-bold py-3 px-8 rounded-lg shadow-xl shadow-pink-500/40 transition-all duration-300 transform hover:scale-105">
+            Book Your Appointment
+          </a>
+          <a href="/login" target="_blank" class="secondary-btn font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+            Login
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24 bg-white">
+      <div class="container mx-auto px-4 max-w-6xl">
+        <h2 class="font-serif text-4xl font-bold text-center mb-4">Everything You Need</h2>
+        <p class="text-center text-lg text-gray-600 mb-16">A seamless experience for customers, staff, and admins.</p>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Feature Card 1 -->
+          <div class="bg-gray-50 p-8 rounded-xl shadow-lg border border-gray-100">
+            <h3 class="font-serif text-2xl font-bold mb-3">For Customers</h3>
+            <p class="text-gray-600">
+              Easily find and book your favorite services, see your upcoming appointments, manage your profile, and leave feedback for your stylist.
+            </p>
+          </div>
+          <!-- Feature Card 2 -->
+          <div class="bg-gray-50 p-8 rounded-xl shadow-lg border border-gray-100">
+            <h3 class="font-serif text-2xl font-bold mb-3">For Staff</h3>
+            <p class="text-gray-600">
+              Manage your 7-day availability, view your daily schedule, track your clients, update appointment notes, and see your performance.
+            </p>
+          </div>
+          <!-- Feature Card 3 -->
+          <div class="bg-gray-50 p-8 rounded-xl shadow-lg border border-gray-100">
+            <h3 class="font-serif text-2xl font-bold mb-3">For Admins</h3>
+            <p class="text-gray-600">
+              Oversee the entire salon. Manage all staff, services, and appointments. View revenue reports and customer feedback, all in one place.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="py-24 bg-pink-50">
+      <div class="container mx-auto px-4 max-w-6xl">
+        <h2 class="font-serif text-4xl font-bold text-center mb-16">Our Premier Services</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Service Card -->
+          <div class="bg-white rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105">
+            <img src="https://placehold.co/600x400/ff6b81/ffffff?text=Haircut" alt="Haircut" class="w-full h-48 object-cover">
+            <div class="p-6">
+              <h3 class="font-serif text-2xl font-bold mb-2">Haircuts & Styling</h3>
+              <p class="text-gray-600">Expert cuts for men and women, tailored to your look.</p>
+            </div>
+          </div>
+          <!-- Service Card -->
+          <div class="bg-white rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105">
+            <img src="https://placehold.co/600x400/ff6b81/ffffff?text=Facial" alt="Facial" class="w-full h-48 object-cover">
+            <div class="p-6">
+              <h3 class="font-serif text-2xl font-bold mb-2">Skin Care & Facials</h3>
+              <p class="text-gray-600">Rejuvenate your skin with our signature glow facials.</p>
+            </div>
+          </div>
+          <!-- Service Card -->
+          <div class="bg-white rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105">
+            <img src="https://placehold.co/600x400/ff6b81/ffffff?text=Spa" alt="Spa" class="w-full h-48 object-cover">
+            <div class="p-6">
+              <h3 class="font-serif text-2xl font-bold mb-2">Spa & Massage</h3>
+              <p class="text-gray-600">Melt away your stress with our relaxing spa treatments.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="py-24 bg-white px-4">
+      <div class="container mx-auto max-w-3xl text-center">
+        <blockquote class="text-2xl md:text-3xl font-serif text-gray-900 leading-relaxed">
+          "This is the best salon experience I've ever had. Booking was effortless, and my stylist was amazing. I'll be coming back!"
+        </blockquote>
+        <p class="mt-6 text-lg font-bold text-pink-600">- Priya S.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2025 GlamFlow. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

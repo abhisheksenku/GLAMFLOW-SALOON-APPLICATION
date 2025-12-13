@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinGuard - Tailwind Portfolio & Fraud System</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Icons -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+
+      /* Custom Fade In Animation for View Switching */
+      .animate-fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Sidebar Active State Border */
+      .sidebar-link.active {
+        background-color: #334155; /* slate-700 */
+        color: #ffffff;
+        border-left: 4px solid #06b6d4; /* cyan-500 */
+      }
+
+      /* Tab Active State */
+      .tab-btn.active {
+        color: #2563eb; /* blue-600 */
+        border-bottom: 2px solid #2563eb;
+      }
+
+      /* Toggle Switch Logic */
+      .toggle-checkbox:checked {
+        right: 0;
+        border-color: #10b981; /* emerald-500 */
+      }
+      .toggle-checkbox:checked + .toggle-label {
+        background-color: #10b981;
+      }
+
+      /* Hide scrollbar for sidebar but keep functionality */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-700"
+  >
+    <!-- ========================================= -->
+    <!-- HEADER -->
+    <!-- ========================================= -->
+    <header
+      class="fixed top-0 left-0 w-full h-16 bg-white shadow-sm z-50 flex items-center justify-between px-6 border-b border-slate-200"
+    >
+      <!-- Logo -->
+      <div class="flex items-center text-blue-600">
+        <span class="material-icons text-3xl mr-2">account_balance</span>
+        <span class="text-xl font-bold tracking-tight text-slate-800"
+          >FinGuard<span class="text-blue-600">Systems</span></span
+        >
+      </div>
+
+      <!-- User Profile -->
+      <div
+        class="flex items-center gap-4 cursor-pointer group p-1 rounded-full hover:bg-slate-50 transition-colors"
+      >
+        <div class="text-right hidden sm:block">
+          <div
+            class="text-sm font-semibold text-slate-700 group-hover:text-blue-700"
+          >
+            Jane Doe
+          </div>
+          <div class="text-xs text-slate-500">Senior Analyst</div>
+        </div>
+        <div class="relative">
+          <img
+            src="https://ui-avatars.com/api/?name=Jane+Doe&background=0D8ABC&color=fff"
+            alt="Profile"
+            class="w-9 h-9 rounded-full border-2 border-white shadow-sm ring-2 ring-slate-100"
+          />
+          <div
+            class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"
+          ></div>
+        </div>
+        <span class="material-icons text-slate-400 group-hover:text-slate-600"
+          >expand_more</span
+        >
+      </div>
+    </header>
+
+    <!-- ========================================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================================= -->
+    <aside
+      class="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-slate-800 text-slate-300 overflow-y-auto no-scrollbar z-40 transition-all duration-300 shadow-xl"
+    >
+      <nav class="py-6 flex flex-col gap-1">
+        <div
+          class="px-6 mb-4 text-xs font-bold text-slate-500 uppercase tracking-wider"
+        >
+          Main Menu
+        </div>
+
+        <a
+          href="#overview"
+          id="link-overview"
+          class="sidebar-link active flex items-center px-6 py-3.5 hover:bg-slate-700 hover:text-white transition-all duration-200 border-l-4 border-transparent"
+        >
+          <span class="material-icons text-xl mr-3 opacity-80">dashboard</span>
+          <span class="font-medium text-sm">Overview</span>
+        </a>
+        <a
+          href="#transactions"
+          id="link-transactions"
+          class="sidebar-link flex items-center px-6 py-3.5 hover:bg-slate-700 hover:text-white transition-all duration-200 border-l-4 border-transparent"
+        >
+          <span class="material-icons text-xl mr-3 opacity-80"
+            >receipt_long</span
+          >
+          <span class="font-medium text-sm">Transactions</span>
+        </a>
+        <a
+          href="#fraud"
+          id="link-fraud"
+          class="sidebar-link flex items-center px-6 py-3.5 hover:bg-slate-700 hover:text-white transition-all duration-200 border-l-4 border-transparent"
+        >
+          <span class="material-icons text-xl mr-3 opacity-80">policy</span>
+          <span class="font-medium text-sm">Fraud Analytics</span>
+        </a>
+
+        <div
+          class="px-6 mt-6 mb-4 text-xs font-bold text-slate-500 uppercase tracking-wider"
+        >
+          Management
+        </div>
+
+        <a
+          href="#alerts"
+          id="link-alerts"
+          class="sidebar-link flex items-center px-6 py-3.5 hover:bg-slate-700 hover:text-white transition-all duration-200 border-l-4 border-transparent"
+        >
+          <span class="material-icons text-xl mr-3 opacity-80"
+            >notifications_active</span
+          >
+          <span class="font-medium text-sm">Risk Alerts</span>
+          <span
+            class="ml-auto bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full"
+            >3</span
+          >
+        </a>
+        <a
+          href="#features"
+          id="link-features"
+          class="sidebar-link flex items-center px-6 py-3.5 hover:bg-slate-700 hover:text-white transition-all duration-200 border-l-4 border-transparent"
+        >
+          <span class="material-icons text-xl mr-3 opacity-80">star</span>
+          <span class="font-medium text-sm">Premium Features</span>
+        </a>
+
+        <a
+          href="#admin"
+          id="link-admin"
+          class="sidebar-link flex items-center px-6 py-3.5 hover:bg-slate-700 hover:text-white transition-all duration-200 border-l-4 border-transparent"
+        >
+          <span class="material-icons text-xl mr-3 opacity-80"
+            >settings_suggest</span
+          >
+          <span class="font-medium text-sm">Admin Panel</span>
+        </a>
+      </nav>
+
+      <!-- Bottom Banner -->
+      <div
+        class="absolute bottom-0 w-full p-4 bg-slate-900/50 backdrop-blur-sm"
+      >
+        <div class="flex items-center justify-between text-xs text-slate-400">
+          <span>v2.4.0 (Stable)</span>
+          <span
+            class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"
+          ></span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ========================================= -->
+    <!-- MAIN CONTENT WRAPPER -->
+    <!-- ========================================= -->
+    <main
+      class="ml-64 mt-16 p-8 min-h-[calc(100vh-4rem)] transition-all duration-300"
+    >
+      <!-- Dynamic Page Header -->
+      <div class="flex justify-between items-end mb-8 animate-fade-in">
+        <div>
+          <h1 id="page-title" class="text-2xl font-bold text-slate-800">
+            Portfolio Overview
+          </h1>
+          <p class="text-sm text-slate-500 mt-1">
+            Real-time data synchronization active
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-slate-400 font-mono hidden sm:block"
+            >Last Sync: 10:42:05 AM</span
+          >
+          <button
+            class="flex items-center gap-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-all focus:ring-2 focus:ring-blue-100"
+          >
+            <span class="material-icons text-sm">refresh</span>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- ======================================================= -->
+      <!-- VIEW 1: DASHBOARD (Overview) -->
+      <!-- ======================================================= -->
+      <section id="view-overview" class="view-section animate-fade-in">
+        <!-- Tab Navigation -->
+        <div class="flex border-b border-slate-200 mb-6 space-x-6">
+          <button
+            class="tab-btn active pb-3 text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors"
+            data-target="tab-portfolio"
+          >
+            Portfolio Dashboard
+          </button>
+          <button
+            class="tab-btn pb-3 text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors"
+            data-target="tab-fraud-ops"
+          >
+            Fraud Detection Ops
+          </button>
+          <button
+            class="tab-btn pb-3 text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors"
+            data-target="tab-cases"
+          >
+            Analyst Case Manager
+          </button>
+        </div>
+
+        <!-- TAB A: PORTFOLIO -->
+        <div id="tab-portfolio" class="tab-content">
+          <!-- Metrics Grid -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+          >
+            <!-- Metric Card 1 -->
+            <div
+              class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <h4
+                class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2"
+              >
+                Total Investment
+              </h4>
+              <div class="text-2xl font-bold text-slate-800">$150,000.00</div>
+              <div
+                class="text-xs font-semibold text-amber-500 mt-1 flex items-center"
+              >
+                <span class="material-icons text-sm mr-1">remove</span>
+                Inception to Date
+              </div>
+            </div>
+            <!-- Metric Card 2 -->
+            <div
+              class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <h4
+                class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2"
+              >
+                Total P/L
+              </h4>
+              <div class="text-2xl font-bold text-emerald-600">+$7,500.00</div>
+              <div
+                class="text-xs font-semibold text-emerald-600 mt-1 flex items-center"
+              >
+                <span class="material-icons text-sm mr-1">arrow_upward</span>
+                +5.0% Return
+              </div>
+            </div>
+            <!-- Metric Card 3 -->
+            <div
+              class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <h4
+                class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2"
+              >
+                Today's P/L
+              </h4>
+              <div class="text-2xl font-bold text-rose-500">-$450.50</div>
+              <div
+                class="text-xs font-semibold text-rose-500 mt-1 flex items-center"
+              >
+                <span class="material-icons text-sm mr-1">arrow_downward</span>
+                -0.3% Today
+              </div>
+            </div>
+            <!-- Metric Card 4 -->
+            <div
+              class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <h4
+                class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2"
+              >
+                Risk (VaR 99%)
+              </h4>
+              <div class="text-2xl font-bold text-slate-700">-$3,100</div>
+              <div
+                class="text-xs font-semibold text-rose-500 mt-1 flex items-center"
+              >
+                <span class="material-icons text-sm mr-1">warning</span> Breach
+                Warning
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts Area -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div
+              class="lg:col-span-2 bg-white p-6 rounded-xl border border-slate-100 shadow-sm"
+            >
+              <h4 class="text-slate-700 font-bold mb-4">
+                Portfolio Value History
+              </h4>
+              <!-- Placeholder Chart -->
+              <div
+                class="w-full h-72 bg-slate-50 rounded-lg border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400"
+              >
+                <span class="material-icons text-4xl mb-2">show_chart</span>
+                <span class="text-sm font-medium"
+                  >Line Chart Visualization</span
+                >
+              </div>
+            </div>
+            <div
+              class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm"
+            >
+              <h4 class="text-slate-700 font-bold mb-4">Asset Allocation</h4>
+              <!-- Placeholder Chart -->
+              <div
+                class="w-full h-72 bg-slate-50 rounded-lg border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400"
+              >
+                <span class="material-icons text-4xl mb-2">pie_chart</span>
+                <span class="text-sm font-medium">Pie Chart Visualization</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Holdings Table -->
+          <div
+            class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+          >
+            <div
+              class="px-6 py-4 border-b border-slate-100 font-semibold text-slate-700"
+            >
+              Current Holdings
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider"
+                  >
+                    <th class="px-6 py-4 font-semibold">Symbol</th>
+                    <th class="px-6 py-4 font-semibold">Qty</th>
+                    <th class="px-6 py-4 font-semibold">Avg Price</th>
+                    <th class="px-6 py-4 font-semibold">LTP</th>
+                    <th class="px-6 py-4 font-semibold">Day Change</th>
+                    <th class="px-6 py-4 font-semibold">Net P/L</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-6 py-4 font-medium text-slate-900">AAPL</td>
+                    <td class="px-6 py-4 text-slate-600">150</td>
+                    <td class="px-6 py-4 text-slate-600">$160.00</td>
+                    <td class="px-6 py-4 text-slate-800 font-bold">$170.50</td>
+                    <td class="px-6 py-4 text-emerald-600 font-semibold">
+                      +1.2%
+                    </td>
+                    <td class="px-6 py-4 text-emerald-600 font-bold">
+                      +$1,575.00
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-6 py-4 font-medium text-slate-900">TSLA</td>
+                    <td class="px-6 py-4 text-slate-600">50</td>
+                    <td class="px-6 py-4 text-slate-600">$220.00</td>
+                    <td class="px-6 py-4 text-slate-800 font-bold">$215.30</td>
+                    <td class="px-6 py-4 text-rose-500 font-semibold">-2.1%</td>
+                    <td class="px-6 py-4 text-rose-500 font-bold">-$235.00</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="px-6 py-4 font-medium text-slate-900">SPY</td>
+                    <td class="px-6 py-4 text-slate-600">25</td>
+                    <td class="px-6 py-4 text-slate-600">$420.00</td>
+                    <td class="px-6 py-4 text-slate-800 font-bold">$425.80</td>
+                    <td class="px-6 py-4 text-emerald-600 font-semibold">
+                      +0.5%
+                    </td>
+                    <td class="px-6 py-4 text-emerald-600 font-bold">
+                      +$145.00
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB B: FRAUD OPS -->
+        <div id="tab-fraud-ops" class="tab-content hidden animate-fade-in">
+          <!-- Upload Area -->
+          <div
+            class="w-full bg-cyan-50 border-2 border-dashed border-cyan-300 rounded-xl p-10 text-center mb-8 hover:bg-cyan-100 transition-colors cursor-pointer group"
+          >
+            <span
+              class="material-icons text-5xl text-cyan-500 group-hover:scale-110 transition-transform mb-3"
+              >cloud_upload</span
+            >
+            <h3 class="text-lg font-bold text-cyan-900 mb-1">
+              Upload Transaction Batch
+            </h3>
+            <p class="text-sm text-cyan-700">
+              Drag and drop CSV files here or click to run model scoring.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div
+              class="bg-white p-5 rounded-lg border border-slate-100 shadow-sm"
+            >
+              <div class="text-xs font-bold text-slate-400 uppercase">
+                Batch Status
+              </div>
+              <div class="text-xl font-bold text-slate-800 mt-1">Processed</div>
+              <div class="text-xs text-slate-500 mt-1">10,000 Rows Scanned</div>
+            </div>
+            <div
+              class="bg-white p-5 rounded-lg border border-slate-100 shadow-sm border-l-4 border-l-rose-500"
+            >
+              <div class="text-xs font-bold text-slate-400 uppercase">
+                Flagged Txns
+              </div>
+              <div class="text-xl font-bold text-rose-600 mt-1">45</div>
+              <div class="text-xs text-rose-500 mt-1 font-semibold">
+                High Risk (>0.85)
+              </div>
+            </div>
+            <div
+              class="bg-white p-5 rounded-lg border border-slate-100 shadow-sm"
+            >
+              <div class="text-xs font-bold text-slate-400 uppercase">
+                Model Confidence
+              </div>
+              <div class="text-xl font-bold text-blue-600 mt-1">98.2%</div>
+              <div class="text-xs text-slate-500 mt-1">Random Forest v2.4</div>
+            </div>
+            <div
+              class="bg-white p-5 rounded-lg border border-slate-100 shadow-sm"
+            >
+              <div class="text-xs font-bold text-slate-400 uppercase">
+                Blocked Amount
+              </div>
+              <div class="text-xl font-bold text-emerald-600 mt-1">$12,450</div>
+              <div class="text-xs text-slate-500 mt-1">Prevented Fraud</div>
+            </div>
+          </div>
+
+          <div
+            class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+          >
+            <div
+              class="px-6 py-3 bg-rose-50 border-b border-rose-100 text-rose-700 font-bold flex items-center"
+            >
+              <span class="material-icons text-sm mr-2">error</span>
+              High Priority Anomalies
+            </div>
+            <table class="w-full text-left">
+              <thead>
+                <tr class="bg-slate-50 text-slate-500 text-xs uppercase">
+                  <th class="px-6 py-3">Txn ID</th>
+                  <th class="px-6 py-3">User</th>
+                  <th class="px-6 py-3">Fraud Score</th>
+                  <th class="px-6 py-3">Anomaly Reason</th>
+                  <th class="px-6 py-3">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-sm">
+                <tr>
+                  <td class="px-6 py-3 font-mono text-slate-600">TXN-98213</td>
+                  <td class="px-6 py-3 text-slate-800 font-medium">U4501</td>
+                  <td class="px-6 py-3">
+                    <span
+                      class="bg-rose-100 text-rose-700 px-2 py-1 rounded-full text-xs font-bold"
+                      >0.95</span
+                    >
+                  </td>
+                  <td class="px-6 py-3 text-slate-600">
+                    Geo Change, High Value
+                  </td>
+                  <td class="px-6 py-3">
+                    <button
+                      class="text-blue-600 hover:text-blue-800 font-medium text-xs border border-blue-200 px-3 py-1 rounded hover:bg-blue-50"
+                    >
+                      Create Case
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-6 py-3 font-mono text-slate-600">TXN-98214</td>
+                  <td class="px-6 py-3 text-slate-800 font-medium">U4508</td>
+                  <td class="px-6 py-3">
+                    <span
+                      class="bg-rose-100 text-rose-700 px-2 py-1 rounded-full text-xs font-bold"
+                      >0.88</span
+                    >
+                  </td>
+                  <td class="px-6 py-3 text-slate-600">Velocity, New Device</td>
+                  <td class="px-6 py-3">
+                    <button
+                      class="text-blue-600 hover:text-blue-800 font-medium text-xs border border-blue-200 px-3 py-1 rounded hover:bg-blue-50"
+                    >
+                      Create Case
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB C: CASES -->
+        <div id="tab-cases" class="tab-content hidden animate-fade-in">
+          <div class="grid grid-cols-3 gap-6">
+            <!-- Case List -->
+            <div
+              class="col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+            >
+              <div
+                class="px-6 py-4 border-b border-slate-100 font-semibold text-slate-700"
+              >
+                Open Cases Queue
+              </div>
+              <table class="w-full text-left">
+                <thead class="bg-slate-50 text-slate-500 text-xs uppercase">
+                  <tr>
+                    <th class="px-4 py-3">Case ID</th>
+                    <th class="px-4 py-3">Risk</th>
+                    <th class="px-4 py-3">Status</th>
+                    <th class="px-4 py-3">Assignee</th>
+                    <th class="px-4 py-3">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-sm">
+                  <tr class="bg-blue-50/50">
+                    <td class="px-4 py-3 font-bold text-slate-700">
+                      CASE-1002
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="text-rose-600 font-bold">0.88</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span
+                        class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-xs"
+                        >In Progress</span
+                      >
+                    </td>
+                    <td class="px-4 py-3 text-slate-600">Jane Doe</td>
+                    <td class="px-4 py-3">
+                      <button class="text-blue-600 font-bold text-xs">
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3 text-slate-600">CASE-1001</td>
+                    <td class="px-4 py-3">
+                      <span class="text-rose-600 font-bold">0.95</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span
+                        class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded text-xs"
+                        >Pending</span
+                      >
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 italic">Unassigned</td>
+                    <td class="px-4 py-3">
+                      <button
+                        class="text-slate-500 hover:text-blue-600 font-medium text-xs"
+                      >
+                        Pick Up
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Case Details -->
+            <div
+              class="bg-white rounded-xl border border-slate-200 shadow-sm p-6"
+            >
+              <div class="flex justify-between items-start mb-4">
+                <h3 class="text-lg font-bold text-blue-600">CASE-1002</h3>
+                <span
+                  class="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+                  >In Progress</span
+                >
+              </div>
+
+              <div class="space-y-3 text-sm text-slate-600 mb-6">
+                <div class="flex justify-between border-b border-slate-50 pb-2">
+                  <span class="text-slate-400">Transaction</span>
+                  <span class="font-mono font-medium">TXN-98214</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-50 pb-2">
+                  <span class="text-slate-400">Amount</span>
+                  <span class="font-medium">$4,500.00</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-50 pb-2">
+                  <span class="text-slate-400">User Tier</span>
+                  <span class="font-medium">Silver</span>
+                </div>
+                <div class="flex flex-wrap gap-2 pt-1">
+                  <span
+                    class="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded"
+                    >Velocity</span
+                  >
+                  <span
+                    class="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded"
+                    >New IP</span
+                  >
+                </div>
+              </div>
+
+              <h4 class="text-xs font-bold text-slate-800 uppercase mb-3">
+                Analyst Decision
+              </h4>
+              <div class="flex gap-2 mb-4">
+                <button
+                  class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-lg text-sm font-medium transition-colors shadow-sm"
+                >
+                  Approve (Safe)
+                </button>
+                <button
+                  class="flex-1 bg-rose-500 hover:bg-rose-600 text-white py-2 rounded-lg text-sm font-medium transition-colors shadow-sm"
+                >
+                  Reject (Fraud)
+                </button>
+              </div>
+
+              <textarea
+                class="w-full text-sm border border-slate-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-slate-400 mb-3"
+                rows="3"
+                placeholder="Add investigation notes..."
+              ></textarea>
+              <button
+                class="w-full bg-slate-800 hover:bg-slate-900 text-white py-2 rounded-lg text-sm font-medium transition-colors"
+              >
+                Post Note
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- VIEW 2: TRANSACTIONS -->
+      <!-- ======================================================= -->
+      <section
+        id="view-transactions"
+        class="view-section hidden animate-fade-in"
+      >
+        <!-- Filter Bar -->
+        <div
+          class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex flex-wrap gap-4 items-center mb-6"
+        >
+          <div class="relative flex-grow max-w-md">
+            <span
+              class="material-icons absolute left-3 top-2.5 text-slate-400 text-sm"
+              >search</span
+            >
+            <input
+              type="text"
+              placeholder="Search Symbol, ID..."
+              class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <select
+            class="p-2 border border-slate-300 rounded-lg text-sm text-slate-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          >
+            <option>All Types</option>
+            <option>Buy</option>
+            <option>Sell</option>
+          </select>
+          <input
+            type="date"
+            class="p-2 border border-slate-300 rounded-lg text-sm text-slate-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
+          <button
+            class="ml-auto bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+          >
+            <span class="material-icons text-sm">download</span> Export CSV
+          </button>
+        </div>
+
+        <!-- Table -->
+        <div
+          class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+        >
+          <table class="w-full text-left border-collapse">
+            <thead
+              class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider"
+            >
+              <tr>
+                <th class="px-6 py-4 font-semibold">Date & Time</th>
+                <th class="px-6 py-4 font-semibold">Txn ID</th>
+                <th class="px-6 py-4 font-semibold">Symbol</th>
+                <th class="px-6 py-4 font-semibold">Type</th>
+                <th class="px-6 py-4 font-semibold">Qty</th>
+                <th class="px-6 py-4 font-semibold">Price</th>
+                <th class="px-6 py-4 font-semibold">Total</th>
+                <th class="px-6 py-4 font-semibold">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-sm">
+              <tr class="hover:bg-slate-50 transition-colors">
+                <td class="px-6 py-4 text-slate-600">2025-11-28 14:30</td>
+                <td class="px-6 py-4 font-mono text-slate-500">#TXN-8849</td>
+                <td class="px-6 py-4 font-bold text-slate-700">NVDA</td>
+                <td class="px-6 py-4">
+                  <span class="text-emerald-600 font-bold">BUY</span>
+                </td>
+                <td class="px-6 py-4 text-slate-600">10</td>
+                <td class="px-6 py-4 text-slate-600">$450.00</td>
+                <td class="px-6 py-4 text-slate-800 font-medium">$4,500.00</td>
+                <td class="px-6 py-4">
+                  <span
+                    class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-xs font-bold"
+                    >Completed</span
+                  >
+                </td>
+              </tr>
+              <tr class="hover:bg-slate-50 transition-colors">
+                <td class="px-6 py-4 text-slate-600">2025-11-28 10:15</td>
+                <td class="px-6 py-4 font-mono text-slate-500">#TXN-8848</td>
+                <td class="px-6 py-4 font-bold text-slate-700">TSLA</td>
+                <td class="px-6 py-4">
+                  <span class="text-rose-600 font-bold">SELL</span>
+                </td>
+                <td class="px-6 py-4 text-slate-600">5</td>
+                <td class="px-6 py-4 text-slate-600">$220.00</td>
+                <td class="px-6 py-4 text-slate-800 font-medium">$1,100.00</td>
+                <td class="px-6 py-4">
+                  <span
+                    class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-xs font-bold"
+                    >Completed</span
+                  >
+                </td>
+              </tr>
+              <tr class="hover:bg-slate-50 transition-colors">
+                <td class="px-6 py-4 text-slate-600">2025-11-27 09:00</td>
+                <td class="px-6 py-4 font-mono text-slate-500">#TXN-8842</td>
+                <td class="px-6 py-4 font-bold text-slate-700">AAPL</td>
+                <td class="px-6 py-4">
+                  <span class="text-emerald-600 font-bold">BUY</span>
+                </td>
+                <td class="px-6 py-4 text-slate-600">100</td>
+                <td class="px-6 py-4 text-slate-600">$160.00</td>
+                <td class="px-6 py-4 text-slate-800 font-medium">$16,000.00</td>
+                <td class="px-6 py-4">
+                  <span
+                    class="bg-amber-100 text-amber-700 px-2 py-1 rounded-full text-xs font-bold"
+                    >Pending</span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            class="px-6 py-4 border-t border-slate-100 flex justify-end gap-2"
+          >
+            <button
+              class="px-3 py-1 text-xs font-medium text-slate-500 border border-slate-200 rounded hover:bg-slate-50"
+            >
+              Prev
+            </button>
+            <button
+              class="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-200 bg-blue-50 rounded"
+            >
+              1
+            </button>
+            <button
+              class="px-3 py-1 text-xs font-medium text-slate-500 border border-slate-200 rounded hover:bg-slate-50"
+            >
+              2
+            </button>
+            <button
+              class="px-3 py-1 text-xs font-medium text-slate-500 border border-slate-200 rounded hover:bg-slate-50"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- VIEW 3: FRAUD ANALYTICS -->
+      <!-- ======================================================= -->
+      <section id="view-fraud" class="view-section hidden animate-fade-in">
+        <!-- Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div
+            class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm"
+          >
+            <h4 class="text-xs font-bold text-slate-400 uppercase">
+              Detection Rate
+            </h4>
+            <div class="text-2xl font-bold text-slate-800 mt-2">1.2%</div>
+            <div class="text-xs text-slate-500 mt-1">of total volume</div>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm"
+          >
+            <h4 class="text-xs font-bold text-slate-400 uppercase">
+              False Positives
+            </h4>
+            <div class="text-2xl font-bold text-emerald-600 mt-2">0.05%</div>
+            <div class="text-xs text-emerald-600 mt-1 font-semibold">
+              Below Threshold
+            </div>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm"
+          >
+            <h4 class="text-xs font-bold text-slate-400 uppercase">
+              Total Analyzed
+            </h4>
+            <div class="text-2xl font-bold text-slate-800 mt-2">54.2K</div>
+            <div class="text-xs text-slate-500 mt-1">Transactions</div>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm"
+          >
+            <h4 class="text-xs font-bold text-slate-400 uppercase">
+              High Risk Users
+            </h4>
+            <div class="text-2xl font-bold text-rose-600 mt-2">12</div>
+            <div class="text-xs text-rose-500 mt-1 font-semibold">
+              Active Watchlist
+            </div>
+          </div>
+        </div>
+
+        <!-- Visualizations -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div
+            class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm h-80"
+          >
+            <h4 class="font-bold text-slate-700 mb-4">
+              Geographic Risk Heatmap
+            </h4>
+            <div
+              class="w-full h-64 bg-slate-50 rounded border border-dashed border-slate-200 flex items-center justify-center text-slate-400"
+            >
+              <span class="material-icons text-3xl mr-2">public</span> [Map
+              Visualization: Red Zones]
+            </div>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm h-80"
+          >
+            <h4 class="font-bold text-slate-700 mb-4">
+              Fraud Score Distribution
+            </h4>
+            <div
+              class="w-full h-64 bg-slate-50 rounded border border-dashed border-slate-200 flex items-center justify-center text-slate-400"
+            >
+              <span class="material-icons text-3xl mr-2">bar_chart</span>
+              [Histogram: Score Frequency]
+            </div>
+          </div>
+        </div>
+
+        <!-- Rules Table -->
+        <div
+          class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+        >
+          <div
+            class="px-6 py-4 border-b border-slate-100 flex justify-between items-center"
+          >
+            <h3 class="font-bold text-slate-700">Rule Engine Performance</h3>
+            <button
+              class="text-xs bg-white border border-slate-300 px-3 py-1 rounded hover:bg-slate-50 transition-colors"
+            >
+              Configure Rules
+            </button>
+          </div>
+          <table class="w-full text-left">
+            <thead class="bg-slate-50 text-slate-500 text-xs uppercase">
+              <tr>
+                <th class="px-6 py-3">Rule Name</th>
+                <th class="px-6 py-3">Trigger Count (24h)</th>
+                <th class="px-6 py-3">Precision</th>
+                <th class="px-6 py-3">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-sm">
+              <tr>
+                <td class="px-6 py-3 text-slate-700 font-medium">
+                  Rapid Velocity (10 txn / 1 min)
+                </td>
+                <td class="px-6 py-3 text-slate-600">145</td>
+                <td class="px-6 py-3 text-emerald-600 font-bold">High (98%)</td>
+                <td class="px-6 py-3">
+                  <span
+                    class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-xs font-bold"
+                    >Active</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td class="px-6 py-3 text-slate-700 font-medium">
+                  Large Transaction (> $10k)
+                </td>
+                <td class="px-6 py-3 text-slate-600">22</td>
+                <td class="px-6 py-3 text-amber-600 font-bold">Medium (75%)</td>
+                <td class="px-6 py-3">
+                  <span
+                    class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-xs font-bold"
+                    >Active</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td class="px-6 py-3 text-slate-700 font-medium">
+                  IP Geolocation Mismatch
+                </td>
+                <td class="px-6 py-3 text-slate-600">8</td>
+                <td class="px-6 py-3 text-rose-500 font-bold">Low (45%)</td>
+                <td class="px-6 py-3">
+                  <span
+                    class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full text-xs font-bold"
+                    >Monitoring</span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- VIEW 4: ALERTS -->
+      <!-- ======================================================= -->
+      <section id="view-alerts" class="view-section hidden animate-fade-in">
+        <div
+          class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex flex-wrap gap-4 items-center mb-6"
+        >
+          <select
+            class="p-2 border border-slate-300 rounded-lg text-sm text-slate-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          >
+            <option>All Severities</option>
+            <option>High</option>
+            <option>Medium</option>
+          </select>
+          <select
+            class="p-2 border border-slate-300 rounded-lg text-sm text-slate-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          >
+            <option>All Sources</option>
+            <option>Risk Engine</option>
+            <option>Fraud Model</option>
+          </select>
+          <button
+            class="ml-auto text-sm text-slate-500 hover:text-blue-600 font-medium"
+          >
+            Mark All as Read
+          </button>
+        </div>
+
+        <div
+          class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+        >
+          <table class="w-full text-left">
+            <thead class="bg-slate-50 text-slate-500 text-xs uppercase">
+              <tr>
+                <th class="px-6 py-3">Timestamp</th>
+                <th class="px-6 py-3">Severity</th>
+                <th class="px-6 py-3">Source</th>
+                <th class="px-6 py-3">Alert Message</th>
+                <th class="px-6 py-3">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-sm">
+              <tr class="bg-rose-50/50">
+                <td class="px-6 py-4 text-slate-500">10:45:00 AM</td>
+                <td class="px-6 py-4">
+                  <span
+                    class="bg-rose-100 text-rose-700 px-2 py-1 rounded-full text-xs font-bold"
+                    >High</span
+                  >
+                </td>
+                <td class="px-6 py-4 text-slate-700 font-medium">
+                  Risk Engine
+                </td>
+                <td class="px-6 py-4 text-slate-800">
+                  <strong>VaR Breach:</strong> Portfolio VaR exceeded limit of
+                  $3,000.
+                </td>
+                <td class="px-6 py-4">
+                  <button
+                    class="text-blue-600 font-medium text-xs border border-blue-200 px-2 py-1 rounded hover:bg-blue-50"
+                  >
+                    Ack
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-slate-500">09:30:00 AM</td>
+                <td class="px-6 py-4">
+                  <span
+                    class="bg-amber-100 text-amber-700 px-2 py-1 rounded-full text-xs font-bold"
+                    >Medium</span
+                  >
+                </td>
+                <td class="px-6 py-4 text-slate-700 font-medium">
+                  Fraud Engine
+                </td>
+                <td class="px-6 py-4 text-slate-800">
+                  Suspicious login attempt on Admin Account.
+                </td>
+                <td class="px-6 py-4">
+                  <button
+                    class="text-blue-600 font-medium text-xs border border-blue-200 px-2 py-1 rounded hover:bg-blue-50"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- VIEW 5: ADMIN -->
+      <!-- ======================================================= -->
+      <section id="view-admin" class="view-section hidden animate-fade-in">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- User Mgmt -->
+          <div
+            class="bg-white rounded-xl border border-slate-200 shadow-sm p-6"
+          >
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="font-bold text-slate-800">User Management</h3>
+              <button
+                class="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded hover:bg-blue-700 transition-colors"
+              >
+                + Add User
+              </button>
+            </div>
+            <table class="w-full text-left text-sm">
+              <thead class="text-slate-500 border-b border-slate-100">
+                <tr>
+                  <th class="pb-2">User</th>
+                  <th class="pb-2">Role</th>
+                  <th class="pb-2">Status</th>
+                  <th class="pb-2"></th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="py-3 text-slate-700">jane.doe@fintech.com</td>
+                  <td class="py-3 text-slate-500">Sr. Analyst</td>
+                  <td class="py-3 text-emerald-600 font-bold">Active</td>
+                  <td
+                    class="py-3 text-right text-blue-600 cursor-pointer hover:underline"
+                  >
+                    Edit
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-3 text-slate-700">john.smith@fintech.com</td>
+                  <td class="py-3 text-slate-500">Viewer</td>
+                  <td class="py-3 text-emerald-600 font-bold">Active</td>
+                  <td
+                    class="py-3 text-right text-blue-600 cursor-pointer hover:underline"
+                  >
+                    Edit
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Config -->
+          <div
+            class="bg-white rounded-xl border border-slate-200 shadow-sm p-6"
+          >
+            <h3 class="font-bold text-slate-800 mb-6">System Configuration</h3>
+
+            <div class="mb-4">
+              <label
+                class="block text-xs font-bold text-slate-500 uppercase mb-2"
+                >Fraud Model Version</label
+              >
+              <select
+                class="w-full border border-slate-300 rounded-lg p-2.5 text-sm text-slate-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              >
+                <option>v2.4 (Production - Random Forest)</option>
+                <option>v2.5-beta (XGBoost)</option>
+              </select>
+            </div>
+
+            <div class="mb-6">
+              <label
+                class="block text-xs font-bold text-slate-500 uppercase mb-2"
+                >Risk Threshold ($)</label
+              >
+              <input
+                type="number"
+                value="3000"
+                class="w-full border border-slate-300 rounded-lg p-2.5 text-sm text-slate-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
+
+            <div class="border-t border-slate-100 pt-4 space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-slate-700"
+                  >Real-time WebSocket Updates</span
+                >
+                <div
+                  class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in"
+                >
+                  <input
+                    type="checkbox"
+                    name="toggle"
+                    id="toggle1"
+                    class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 transition-all duration-300"
+                    checked
+                  />
+                  <label
+                    for="toggle1"
+                    class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 cursor-pointer transition-colors duration-300"
+                  ></label>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-slate-700"
+                  >Auto-Reject High Risk (>0.95)</span
+                >
+                <div
+                  class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in"
+                >
+                  <input
+                    type="checkbox"
+                    name="toggle"
+                    id="toggle2"
+                    class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 transition-all duration-300"
+                    checked
+                  />
+                  <label
+                    for="toggle2"
+                    class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 cursor-pointer transition-colors duration-300"
+                  ></label>
+                </div>
+              </div>
+            </div>
+
+            <button
+              class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2.5 rounded-lg mt-6 transition-colors shadow-sm"
+            >
+              Save Configuration
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- VIEW 6: FEATURES -->
+      <!-- ======================================================= -->
+      <section id="view-features" class="view-section hidden animate-fade-in">
+        <!-- PREMIUM CTA BLOCK -->
+        <div
+          id="premium-block"
+          class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"
+        >
+          <h2 class="text-xl font-bold text-slate-800 mb-3">
+            Unlock Premium Features
+          </h2>
+
+          <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+            Upgrade to access the following tools:
+            <br />• Daily gold price updates <br />• Forecast pricing for
+            tomorrow <br />• Priority market risk alerts <br />• Enhanced fraud
+            protection layer
+          </p>
+
+          <button
+            id="premium-btn"
+            class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition"
+          >
+            Upgrade Now
+          </button>
+        </div>
+
+        <!-- GOLD PRICE SECTION -->
+        <div id="gold-prices" class="hidden mt-6 space-y-6">
+          <!-- Badge -->
+          <span
+            id="premium-badge"
+            class="hidden bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-semibold"
+          >
+            Premium Active
+          </span>
+
+          <!-- Gold Summary -->
+          <div
+            class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"
+          >
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Live Gold Market Summary
+            </h3>
+            <p class="text-xs text-slate-500 mb-4">
+              Updated daily at 10:00 AM IST
+            </p>
+
+            <!-- Three Metric Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <div class="text-slate-500 text-xs mb-1">Yesterday</div>
+                <div class="font-bold text-slate-800 text-lg">₹62,850</div>
+                <div class="text-rose-500 font-semibold text-xs">-0.3%</div>
+              </div>
+
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <div class="text-slate-500 text-xs mb-1">Today</div>
+                <div class="font-bold text-emerald-600 text-lg">₹63,120</div>
+                <div class="text-emerald-600 font-semibold text-xs">+0.2%</div>
+              </div>
+
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <div class="text-slate-500 text-xs mb-1">
+                  Tomorrow (Forecast)
+                </div>
+                <div class="font-bold text-blue-600 text-lg">₹63,260</div>
+                <div class="text-blue-600 font-semibold text-xs">+0.1%</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart Placeholder -->
+          <div
+            class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"
+          >
+            <h3 class="font-bold text-slate-800 mb-4">
+              Gold Price Trend (Last 7 Days)
+            </h3>
+            <div
+              class="w-full h-56 bg-slate-50 border border-dashed border-slate-200 rounded-lg flex items-center justify-center text-slate-400"
+            >
+              [Chart Placeholder]
+            </div>
+          </div>
+
+          <!-- Coming Soon -->
+          <div
+            class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"
+          >
+            <h3 class="font-bold text-slate-800 mb-3">Coming Soon</h3>
+            <ul class="text-sm text-slate-600 space-y-1">
+              <li>• Silver price analytics</li>
+              <li>• Commodity volatility predictions</li>
+              <li>• Monthly gold volatility alerts</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div
+      id="toast"
+      class="fixed top-20 right-6 bg-white border-l-4 border-rose-500 text-slate-800 px-6 py-4 rounded shadow-lg flex items-center gap-3 z-50 animate-bounce"
+    >
+      <span class="material-icons text-rose-500">warning</span>
+      <div>
+        <div class="font-bold text-sm">CRITICAL ALERT</div>
+        <div class="text-xs text-slate-500">Portfolio VaR Breach detected.</div>
+      </div>
+      <span
+        class="material-icons text-slate-400 text-sm cursor-pointer hover:text-slate-600 ml-2"
+        onclick="document.getElementById('toast').style.display='none'"
+        >close</span
+      >
+    </div>
+
+    <!-- ========================================= -->
+    <!-- JAVASCRIPT LOGIC                          -->
+    <!-- ========================================= -->
+    <script>
+      // 1. Sidebar Navigation Logic
+      const navLinks = document.querySelectorAll(".sidebar-link");
+      const views = {
+        "link-overview": "view-overview",
+        "link-transactions": "view-transactions",
+        "link-fraud": "view-fraud",
+        "link-alerts": "view-alerts",
+        "link-admin": "view-admin",
+        "link-features": "view-features",
+      };
+      const pageTitles = {
+        "link-overview": "Portfolio Overview",
+        "link-transactions": "Transaction History",
+        "link-fraud": "Fraud Analytics & Detection",
+        "link-alerts": "System & Risk Alerts",
+        "link-admin": "Administration Panel",
+        "link-features": "Features (Premium)",
+      };
+      const pageTitleElement = document.getElementById("page-title");
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const linkId = link.id;
+          const viewId = views[linkId];
+
+          // Remove active class from all links
+          navLinks.forEach((l) => l.classList.remove("active"));
+          // Add active class to clicked link
+          link.classList.add("active");
+
+          // Hide all views
+          document.querySelectorAll(".view-section").forEach((view) => {
+            view.classList.add("hidden");
+          });
+
+          // Show target view
+          const targetView = document.getElementById(viewId);
+          if (targetView) targetView.classList.remove("hidden");
+
+          // Update Title
+          pageTitleElement.textContent = pageTitles[linkId];
+        });
+      });
+
+      // 2. Dashboard Tab Logic (Portfolio vs Fraud Ops vs Cases)
+      const tabBtns = document.querySelectorAll(".tab-btn");
+      const tabContents = document.querySelectorAll(".tab-content");
+
+      tabBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          // Remove active class from buttons
+          tabBtns.forEach((b) => b.classList.remove("active"));
+          // Add active to clicked
+          btn.classList.add("active");
+
+          // Hide all tab contents
+          tabContents.forEach((content) => content.classList.add("hidden"));
+
+          // Show target content
+          const targetId = btn.getAttribute("data-target");
+          document.getElementById(targetId).classList.remove("hidden");
+        });
+      });
+      const expandIcon = document.querySelector(
+        ".material-icons.text-slate-400"
+      );
+
+      // Create dropdown dynamically
+      const dropdown = document.createElement("div");
+      dropdown.id = "profileDropdown";
+      dropdown.className =
+        "hidden absolute top-16 right-0 w-56 bg-white shadow-lg border border-slate-200 rounded-lg p-4 animate-fade-in";
+
+      dropdown.innerHTML = `
+        <div class="font-semibold text-slate-800">Jane Doe</div>
+        <div class="text-sm text-slate-500 mb-3">jane.doe@example.com</div>
+
+        <button class="w-full bg-rose-600 text-white py-1.5 rounded-md hover:bg-rose-700 transition">
+          View Profile
+        </button>
+      `;
+
+      document.body.appendChild(dropdown);
+
+      // Toggle dropdown
+      expandIcon.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle("hidden");
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", () => {
+        dropdown.classList.add("hidden");
+      });
+
+      // Premium upgrade visualization
+      const premiumBtn = document.getElementById("premium-btn");
+      const premiumBlock = document.getElementById("premium-block");
+      const goldPrices = document.getElementById("gold-prices");
+      const premiumBadge = document.getElementById("premium-badge");
+      const featuresLink = document.getElementById("link-features");
+
+      premiumBtn.addEventListener("click", () => {
+        // Hide the Upgrade section
+        premiumBlock.style.display = "none";
+
+        // Show gold price section
+        goldPrices.classList.remove("hidden");
+
+        // Show badge
+        premiumBadge.classList.remove("hidden");
+
+        // Update sidebar text
+        featuresLink.querySelector("span.font-medium").textContent =
+          "Premium Features (Active)";
+
+        // Update page title if open
+        if (
+          !document.getElementById("view-features").classList.contains("hidden")
+        ) {
+          document.getElementById("page-title").textContent =
+            "Premium Features (Active)";
+        }
+      });
+
+      // Auto-hide toast after 5 seconds
+      setTimeout(() => {
+        const toast = document.getElementById("toast");
+        if (toast) {
+          toast.style.opacity = "0";
+          toast.style.transition = "opacity 0.5s";
+          setTimeout(() => (toast.style.display = "none"), 500);
+        }
+      }, 5000);
+    </script>
+  </body>
+</html>

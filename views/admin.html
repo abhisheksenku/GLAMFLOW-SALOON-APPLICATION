@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlamFlow Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">GF</div>
+        <div>
+          <h1 style="font-size: 15px; margin: 0">GlamFlow</h1>
+          <div style="font-size: 12px; color: var(--muted)">Admin Panel</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#" data-target="dashboard" class="active">Dashboard</a>
+        <a href="#" data-target="appointments">Appointments</a>
+        <a href="#" data-target="clients">Clients</a>
+        <a href="#" data-target="staff">Staff</a>
+        <a href="#" data-target="services">Services</a>
+        <a href="#" data-target="revenue">Revenue</a>
+        <a href="#" data-target="reviews">Reviews</a>
+        <a href="#" data-target="settings">Settings</a>
+      </nav>
+    </aside>
+    <div class="overlay"></div>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="top-left">
+          <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <nav id="breadcrumbs" class="breadcrumbs" aria-label="breadcrumb">
+            <span>Dashboard</span>
+          </nav>
+          <div class="brand-top" aria-hidden="true">
+            <div
+              class="logo"
+              style="width: 40px; height: 40px; font-size: 14px"
+            >
+              GF
+            </div>
+            <div>
+              <h1 style="font-size: 15px; margin: 0">GlamFlow</h1>
+              <div style="font-size: 12px; color: var(--muted)">
+                Admin Panel
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center">
+          <div class="muted" id="dateTime"></div>
+          <button class="btn logout">Logout</button>
+        </div>
+      </div>
+
+      <section id="dashboard-content" class="page-content active">
+        <div class="welcome" style="margin-bottom: 24px">
+          <div class="avatar" id="avatar">A</div>
+          <div>
+            <h2 id="username">Welcome back, Admin 👋</h2>
+            <p id="subText">
+              Here's a snapshot of your salon's performance today.
+            </p>
+          </div>
+        </div>
+        <section class="cards" aria-label="Quick statistics">
+          <div class="card">
+            <div class="k">Today's Appointments</div>
+            <div class="v" id="todaysAppointments">_</div>
+            <div class="muted">
+              Next: <span id="nextAppointmentInfo">_</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="k">Today's Revenue</div>
+            <div class="v" id="todaysRevenue">_</div>
+            <div class="muted">from completed appointments</div>
+          </div>
+          <div class="card">
+            <div class="k">New Clients (This Month)</div>
+            <div class="v" id="newClients">_</div>
+            <div class="muted">
+              Total clients: <span id="totalClientsCount">_</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="k">Overall Rating</div>
+            <div class="v" id="avgRatingHome">_</div>
+            <div class="muted">
+              <span id="totalReviewsCount">_</span> customer reviews
+            </div>
+          </div>
+        </section>
+
+        <div class="section">
+          <h2>Today's Schedule</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Client</th>
+                <th>Service</th>
+                <th>Staff</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="todaysScheduleTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="appointments-content" class="page-content">
+        <div class="section">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 18px;
+            "
+          >
+            <h2>Manage Appointments</h2>
+            <button id="showCreateApptBtn" class="btn">
+              Create Appointment
+            </button>
+          </div>
+          <div class="filters">
+            <input type="date" id="apptFilterDate" />
+            <select id="apptFilterStaff">
+              <option value="">All Staff</option>
+            </select>
+            <select id="apptFilterStatus">
+              <option value="">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            <button class="btn" id="applyApptFilterBtn">Filter</button>
+
+            <button type="button" class="btn secondary" id="resetApptFilterBtn">
+              Reset
+            </button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Client</th>
+                <th>Service</th>
+                <th>Staff</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="allAppointmentsTable"></tbody>
+          </table>
+          <div id="appointmentsPagination" class="pagination-controls"></div>
+        </div>
+      </section>
+      <section id="appointment-edit-content" class="page-content">
+        <div class="section">
+          <button
+            id="backToApptListBtn"
+            class="btn secondary"
+            style="margin-bottom: 24px"
+          >
+            &larr; Back to Appointments List
+          </button>
+
+          <h3>Edit Appointment</h3>
+
+          <form id="editAppointmentForm">
+            <div class="modal-body">
+              <input type="hidden" id="editBookingId" />
+
+              <p style="font-size: 0.9rem">
+                <strong>Client:</strong>
+                <span id="editApptClientName">...</span>
+              </p>
+              <p style="font-size: 0.9rem; margin-bottom: 16px">
+                <strong>Service:</strong>
+                <span id="editApptServiceName">...</span>
+              </p>
+
+              <hr />
+
+              <div class="form-group">
+                <label for="editApptDate">Date</label>
+                <input
+                  type="date"
+                  id="editApptDate"
+                  class="form-control"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="editApptTimeSlot">Time Slot</label>
+                <input
+                  type="text"
+                  id="editApptTimeSlot"
+                  class="form-control"
+                  placeholder="e.g., 14:00-14:30"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="editApptStaff">Assign Staff</label>
+                <select id="editApptStaff" class="form-control" required>
+                  <option value="">Loading staff...</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="actions" style="margin-top: 16px">
+              <button type="submit" class="btn">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section id="appointment-create-content" class="page-content">
+        <div class="section">
+          <button
+            id="backToApptListBtn_Create"
+            class="btn secondary"
+            style="margin-bottom: 24px"
+          >
+            &larr; Back to Appointments List
+          </button>
+
+          <h3>Create New Appointment</h3>
+
+          <form id="createAppointmentForm">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="createApptClient">Client</label>
+                <select id="createApptClient" class="form-control" required>
+                  <option value="">Select a client...</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="createApptService">Service</label>
+                <select id="createApptService" class="form-control" required>
+                  <option value="">Select a service...</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="createApptStaff">Assign Staff</label>
+                <select id="createApptStaff" class="form-control" required>
+                  <option value="">Select a staff member...</option>
+                </select>
+              </div>
+
+              <hr />
+
+              <div class="form-group">
+                <label for="createApptDate">Date</label>
+                <input
+                  type="date"
+                  id="createApptDate"
+                  class="form-control"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="createApptTimeSlot">Time Slot</label>
+                <input
+                  type="text"
+                  id="createApptTimeSlot"
+                  class="form-control"
+                  placeholder="e.g., 14:00-14:30"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="actions" style="margin-top: 16px">
+              <button type="submit" class="btn">Create Appointment</button>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section id="clients-content" class="page-content">
+        <div class="section">
+          <h2>Client Directory</h2>
+          <div
+            class="toolbar"
+            style="
+              display: flex;
+              justify-content: space-between;
+              gap: 20px;
+              margin-bottom: 18px;
+              flex-wrap: wrap;
+            "
+          >
+            <div class="search-container" style="flex-grow: 1">
+              <input
+                type="search"
+                id="clientSearchInput"
+                placeholder="Search by name..."
+                style="min-width: 250px"
+              />
+            </div>
+            <div class="filters" style="margin-bottom: 18px">
+              <label for="userStatusFilter">View:</label>
+              <select id="userStatusFilter">
+                <option value="active" selected>Active Users</option>
+                <option value="deleted">Deactivated Users</option>
+              </select>
+              <div id="bulkActionContainer" style="display: none">
+                <button id="deactivateSelectedBtn" class="btn danger">
+                  Deactivate Selected
+                </button>
+                <button id="restoreSelectedBtn" class="btn secondary">
+                  Restore Selected
+                </button>
+              </div>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 40px">
+                  <input type="checkbox" id="selectAllCheckbox" />
+                </th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Total Bookings</th>
+                <th>Last Visit</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="clientsTable"></tbody>
+          </table>
+          <div id="clientsPagination" class="pagination-controls">
+            <!-- JS will build buttons here -->
+          </div>
+        </div>
+      </section>
+      <section id="client-detail-content" class="page-content">
+        <div id="client-display-view">
+          <div class="section">
+            <button
+              id="backToClientsBtn"
+              class="btn secondary"
+              style="margin-bottom: 24px"
+            >
+              &larr; Back to Client List
+            </button>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <h2 id="detailUserName">Loading...</h2>
+              <button id="editUserBtn" class="btn">Edit User</button>
+            </div>
+            <div class="profile-details">
+              <p>
+                <strong>Email:</strong> <span id="detailUserEmail">...</span>
+              </p>
+              <p>
+                <strong>Phone:</strong> <span id="detailUserPhone">...</span>
+              </p>
+              <p><strong>Role:</strong> <span id="detailUserRole">...</span></p>
+              <p>
+                <strong>Member Since:</strong>
+                <span id="detailUserMemberSince">...</span>
+              </p>
+            </div>
+            <div
+              id="staffDetailsSection"
+              style="display: none; margin-top: 24px"
+            >
+              <h3>Staff Details</h3>
+              <div class="profile-details">
+                <p>
+                  <strong>Weekly Schedule:</strong>
+                  <div id="detailStaffHours"></div>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="client-edit-view" style="display: none">
+          <div class="section">
+            <h2 id="editViewTitle">Edit User</h2>
+            <form id="editUserForm">
+              <div class="form-group">
+                <label for="editUserName">Name</label>
+                <input type="text" id="editUserName" />
+              </div>
+              <div class="form-group">
+                <label for="editUserEmail">Email</label>
+                <input type="email" id="editUserEmail" />
+              </div>
+              <div class="form-group">
+                <label for="editUserPhone">Phone</label>
+                <input type="tel" id="editUserPhone" />
+              </div>
+              <div class="form-group">
+                <label for="editUserRole">Role</label>
+                <select id="editUserRole">
+                  <option value="customer">Customer</option>
+                  <option value="staff">Staff</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              <div class="actions">
+                <button type="button" id="cancelEditBtn" class="btn secondary">
+                  Cancel
+                </button>
+                <button type="submit" class="btn">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="staff-content" class="page-content">
+        <div class="section">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 18px;
+            "
+          >
+            <h2>Manage Staff</h2>
+          </div>
+          <div class="search-bar-container">
+            <input
+              type="text"
+              id="staffPageSearchInput"
+              placeholder="Search by staff name..."
+            />
+          </div>
+          <div class="services" id="staffList"></div>
+          <div id="staffPagination" class="pagination-controls"></div>
+        </div>
+      </section>
+      <section id="staff-detail-content" class="page-content">
+        <div class="section">
+          <button
+            id="backToStaffListBtn"
+            class="btn secondary"
+            style="margin-bottom: 24px"
+          >
+            &larr; Back to Staff List
+          </button>
+
+          <div id="staff-display-view">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <h2 id="detailStaffName">Loading...</h2>
+              <div>
+                <button id="editStaffProfileBtn" class="btn">
+                  Edit Profile
+                </button>
+                <button id="removeStaffRoleBtn" class="btn danger">
+                  Remove Staff Role
+                </button>
+              </div>
+            </div>
+
+            <h3>Account Details</h3>
+            <div class="profile-details">
+              <p>
+                <strong>Email:</strong> <span id="detailStaffEmail">...</span>
+              </p>
+              <p>
+                <strong>Phone:</strong> <span id="detailStaffPhone">...</span>
+              </p>
+              <p>
+                <strong>Role:</strong> <span id="detailStaffRole">Staff</span>
+              </p>
+            </div>
+
+            <h3 style="margin-top: 24px">Staff Profile</h3>
+            <div class="profile-details">
+              <p>
+                <strong>Specialty:</strong>
+                <span id="detailStaffSpecialty">...</span>
+              </p>
+              <p>
+                <strong>Weekly Schedule:</strong>
+                <div id="detailStaffHours_staff"></div>
+              </p>
+
+              <p><strong>Bio:</strong></p>
+              <p
+                id="detailStaffBio"
+                style="white-space: pre-wrap; margin-top: 8px"
+              >
+                ...
+              </p>
+            </div>
+
+            <h3 style="margin-top: 24px">Assigned Services</h3>
+            <ul id="detailStaffServicesList" class="service-list-simple">
+              <li>Loading services...</li>
+            </ul>
+          </div>
+        </div>
+        <div id="staff-edit-view" style="display: none">
+          <h2 id="editStaffNameHeader">Edit Profile</h2>
+          <form id="editStaffForm">
+            <!-- Specialty -->
+            <div class="form-group">
+              <label>Specialty</label>
+              <input type="text" id="editStaffSpecialty" />
+            </div>
+
+            <!-- Bio -->
+            <div class="form-group">
+              <label>Bio</label>
+              <textarea id="editStaffBio" rows="4"></textarea>
+            </div>
+
+            <hr />
+
+            <h3>Weekly Schedule</h3>
+
+            <div id="weeklyScheduleContainer"></div>
+
+            <hr />
+
+            <h3>Assigned Services</h3>
+            <div id="editStaffServicesList"></div>
+
+            <div class="actions">
+              <button
+                type="button"
+                id="cancelEditStaffBtn"
+                class="btn secondary"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="btn">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section id="services-content" class="page-content">
+        <div id="service-add-view" class="service-sub-view">
+          <div class="section">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 18px;
+              "
+            >
+              <h2>Add New</h2>
+              <button id="showManageServicesBtn" class="btn secondary">
+                Manage Services
+              </button>
+            </div>
+            <form id="serviceForm" class="inline-form">
+              <input type="hidden" id="editingServiceId" />
+              <div class="form-group">
+                <label for="serviceName">Name</label>
+                <input type="text" id="serviceName" required />
+              </div>
+              <div class="form-group">
+                <label for="serviceDescription">Description</label>
+                <input type="text" id="serviceDescription" />
+              </div>
+              <div class="form-group">
+                <label for="serviceDuration">Duration (min)</label>
+                <input type="number" id="serviceDuration" required />
+              </div>
+              <div class="form-group">
+                <label for="servicePrice">Price (₹)</label>
+                <input type="number" id="servicePrice" step="0.01" required />
+              </div>
+              <div class="form-group form-group-button">
+                <button type="submit" id="saveServiceBtn" class="btn">
+                  Save Service
+                </button>
+              </div>
+              <div class="form-group form-group-button">
+                <button
+                  type="button"
+                  id="cancelServiceEditBtn"
+                  class="btn secondary"
+                  style="display: none"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="service-manage-view" class="service-sub-view">
+          <div class="section">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 18px;
+              "
+            >
+              <h2>Manage Services</h2>
+              <button id="showAddServiceBtn" class="btn">
+                Add New Service
+              </button>
+            </div>
+            <div class="search-bar-container">
+              <input
+                type="text"
+                id="servicesPageSearchInput"
+                placeholder="Search by service name..."
+              />
+            </div>
+            <div class="filters"></div>
+            <div class="services card-container" id="serviceList">
+              <p>Loading services...</p>
+            </div>
+            <div id="servicesPagination" class="pagination-controls"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="revenue-content" class="page-content">
+        <!-- =================== VIEW 1: DASHBOARD (Default) =================== -->
+        <div id="revenue-dashboard-view" class="revenue-sub-view">
+          <div class="section">
+            <h2>Revenue & Payments</h2>
+            <div class="cards" style="margin-bottom: 24px">
+              <div class="card">
+                <div class="k">Total Revenue (Month)</div>
+                <div class="v" id="monthlyRevenue">_</div>
+              </div>
+              <div class="card">
+                <div class="k">Total Transactions</div>
+                <div class="v" id="monthlyTransactions">_</div>
+              </div>
+              <div class="card">
+                <div class="k">Avg. Service Price</div>
+                <div class="v" id="avgServicePrice">_</div>
+              </div>
+            </div>
+            <div
+              class="chart-container"
+              style="
+                position: relative;
+                height: 40vh;
+                width: 100%; /* Fixed scrollbar */
+                margin-bottom: 24px;
+              "
+            >
+              <canvas id="revenueChart"></canvas>
+            </div>
+            <!-- New button to switch views -->
+            <button id="showTransactionsBtn" class="btn">
+              View All Transactions &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- =================== VIEW 2: ALL TRANSACTIONS (Hidden) =================== -->
+        <div id="revenue-transactions-view" class="revenue-sub-view">
+          <div class="section">
+            <!-- New back button and breadcrumb title -->
+            <button
+              id="backToRevenueBtn"
+              class="btn secondary"
+              style="margin-bottom: 24px"
+            >
+              &larr; Back to Revenue Dashboard
+            </button>
+            <h2>Revenue / All Transactions</h2>
+
+            <!-- We'll add a search bar here later -->
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Client</th>
+                  <th>Service</th>
+                  <th>Amount</th>
+                  <th>Method</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="paymentTable"></tbody>
+            </table>
+
+            <!-- New pagination container -->
+            <div id="paymentsPagination" class="pagination-controls"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="reviews-content" class="page-content">
+        <div class="section">
+          <h2>Customer Feedback</h2>
+          <div
+            class="avg-rating"
+            id="avgRating"
+            style="margin-bottom: 16px; font-size: 1.2rem"
+          ></div>
+          <div id="reviews"></div>
+          <div id="reviewsPagination" class="pagination-controls"></div>
+        </div>
+      </section>
+
+      <section id="settings-content" class="page-content">
+        <div class="section">
+          <h2>Salon Settings</h2>
+          <form id="salonSettingsForm">
+            <div class="form-group">
+              <label for="salonName">Salon Name</label
+              ><input type="text" id="salonName" value="GlamFlow" />
+            </div>
+            <div class="form-group">
+              <label for="salonAddress">Address</label
+              ><input
+                type="text"
+                id="salonAddress"
+                value="123 Beauty Lane, Jodhpur, Rajasthan"
+              />
+            </div>
+            <div class="form-group">
+              <label for="salonPhone">Phone</label
+              ><input type="tel" id="salonPhone" value="+91 1234567890" />
+            </div>
+            <button type="submit" class="btn">Save Settings</button>
+          </form>
+        </div>
+        <div class="section">
+          <h2>Admin Account</h2>
+          <form id="passwordForm">
+            <div class="form-group">
+              <label for="currentPassword">Current Password</label
+              ><input type="password" id="currentPassword" />
+            </div>
+            <div class="form-group">
+              <label for="newPassword">New Password</label
+              ><input type="password" id="newPassword" />
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm New Password</label
+              ><input type="password" id="confirmPassword" />
+            </div>
+            <button type="submit" class="btn">Update Password</button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <div id="confirmationModal" class="modal-overlay">
+      <div class="modal-card" style="max-width: 400px">
+        <div class="modal-header">
+          <h3 id="confirmTitle">Confirm Action</h3>
+        </div>
+        <div class="modal-body">
+          <p id="confirmMessage">Are you sure you want to proceed?</p>
+        </div>
+        <div
+          class="modal-footer"
+          style="
+            padding: 16px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+          "
+        >
+          <button id="cancelBtn" class="btn secondary">Cancel</button>
+          <button id="confirmBtn" class="btn danger">Confirm</button>
+        </div>
+      </div>
+    </div>
+    <div id="notification-toast" class="toast">
+      <span id="notification-message"></span>
+    </div>
+    <!-- ============================================= -->
+    <!-- ==         SUPPORT CHAT MODAL              == -->
+    <!-- ============================================= -->
+    <div id="chat-widget-container">
+      <!-- The button to open the chat -->
+      <button id="chat-open-btn" class="chat-bubble">
+        <!-- (You can use the same SVG icon as the customer) -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M2.25 12.76c.243 1.27 1.03 2.4 2.11 3.093l.3.188A19.5 19.5 0 0 0 12 19.5c.99 0 1.953-.138 2.86-.399l.3-.093a6.8 6.8 0 0 0 2.11-3.093m0-3.48a6.8 6.8 0 0 0-2.11-3.093l-.3-.093A19.5 19.5 0 0 0 12 4.5c-.99 0-1.953.138-2.86.399l-.3.093a6.8 6.8 0 0 0-2.11 3.093m16.5 3.48 0 0-.001.001 0 0 0 0m-16.5 0 0 0 .001.001 0 0 0 0M12 21a8.25 8.25 0 0 0 8.25-8.25c0-1.55-.422-2.99-.133-4.329a.75.75 0 0 0-1.21-.523l-.31.31a19.488 19.488 0 0 1-3.606 2.153 6.73 6.73 0 0 1-3.04.628 6.73 6.73 0 0 1-3.04-.628A19.488 19.488 0 0 1 5.023 7.7a.75.75 0 0 0-1.21.523C3.672 9.56 3.25 10.999 3.25 12.54A8.25 8.25 0 0 0 12 21Z"
+          />
+        </svg>
+        <span id="chat-notification-dot" class="chat-dot-hidden"></span>
+      </button>
+
+      <!-- The chat modal itself (hidden by default) -->
+      <div id="chat-modal" class="chat-modal-hidden chat-modal-admin">
+        <!-- Left Column: Conversation List -->
+        <div class="chat-sidebar">
+          <div class="chat-header">
+            <h3>Active Chats</h3>
+          </div>
+          <div id="chat-user-list" class="chat-user-list">
+            <p class="muted">No active chats.</p>
+          </div>
+        </div>
+
+        <!-- Right Column: Message Window -->
+        <div class="chat-main">
+          <div class="chat-header">
+            <h3 id="chat-with-name">Select a chat</h3>
+            <button id="chat-close-btn" class="chat-close">&times;</button>
+          </div>
+          <div id="chat-messages" class="chat-messages">
+            <!-- Messages will be added here -->
+          </div>
+          <form id="chat-form" class="chat-form">
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Type your reply..."
+              autocomplete="off"
+              disabled
+            />
+            <button type="submit" class="btn-send" disabled>Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="/js/config.js"></script>
+    <script src="/js/admin.js"></script>
+  </body>
+</html>

@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Auto Category Detector – Fixed for Dosa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f0f2f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #d4edda;
+            border-left: 6px solid #28a745;
+            border-radius: 8px;
+            display: none;
+        }
+        h2 { color: #333; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Describe Anything – AI Category Detection</h2>
+    
+    <form id="itemForm">
+        <label for="description"><strong>Description</strong></label>
+        <textarea id="description" placeholder="e.g. Just ate a yummy dosa..." required></textarea>
+        <button type="submit" id="submitBtn">Submit (Loading AI...)</button>
+    </form>
+
+    <div id="result" class="result">
+        <h3>Submitted!</h3>
+        <p><strong>Description:</strong> <span id="displayDesc"></span></p>
+        <p><strong>AI Detected Category:</strong> <strong id="displayCat" style="color:#155724;"></strong></p>
+    </div>
+</div>
+
+<script type="module">
+    import { pipeline } from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2";
+
+    const categories = [
+        "Food or eating related content",
+        "Travel or trip related activity",
+        "Clothing or fashion item",
+        "Movie or entertainment content",
+        "Technology or gadgets",
+        "Other"
+    ];
+
+    let classifier = null;
+    const submitBtn = document.getElementById("submitBtn");
+
+    // Enhanced fallback regex (detects dosa, idli, etc.)
+    function detectCategoryFallback(text) {
+        text = text.toLowerCase();
+        if (/dosa|idli|vada|biryani|eat|food|meal|snack|tiffin|breakfast|lunch|dinner|restaurant/.test(text))
+            return "Food";
+        if (/travel|trip|flight|hotel|vacation|train|journey|goa|dubai/.test(text))
+            return "Travel";
+        if (/dress|shirt|jeans|kurta|saree|fashion|clothes|tshirt/.test(text))
+            return "Clothing";
+        if (/movie|film|cinema|netflix|series|bollywood|hollywood/.test(text))
+            return "Movie";
+        if (/phone|laptop|mobile|technology|tech|device|gadget/.test(text))
+            return "Technology";
+        return "Other";
+    }
+
+    // Load AI Model
+    async function loadModel() {
+        try {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Loading Model...";
+            
+            classifier = await pipeline("zero-shot-classification", "Xenova/mobilebert-uncased-mnli");
+
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit";
+        } catch (err) {
+            console.error("Model load failed:", err);
+            submitBtn.textContent = "Submit (Fallback Only)";
+            submitBtn.disabled = false;
+        }
+    }
+
+    loadModel();
+
+    // Form Submit Handler
+    document.getElementById("itemForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const desc = document.getElementById("description").value.trim();
+        let category = "Other";
+
+        if (classifier) {
+            // RUN AI MODEL
+            const result = await classifier(desc, categories);
+
+            const bestLabel = result.labels[0];
+            const bestScore = result.scores[0];
+
+            // LOW CONFIDENCE → USE FALLBACK (this fixes dosa)
+            if (bestScore < 0.45) {
+                category = detectCategoryFallback(desc);
+            } else {
+                category = bestLabel.replace("content", "").trim();
+            }
+        } else {
+            // If AI model failed → fallback only
+            category = detectCategoryFallback(desc);
+        }
+
+        // Show result
+        document.getElementById("displayDesc").textContent = desc;
+        document.getElementById("displayCat").textContent = category;
+        document.getElementById("result").style.display = "block";
+    });
+</script>
+
+</body>
+</html>

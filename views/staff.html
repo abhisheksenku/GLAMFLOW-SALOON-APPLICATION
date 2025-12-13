@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlamFlow Staff Dashboard</title>
+    <link rel="stylesheet" href="/css/staff.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo" id="staff-logo"></div>
+        <div>
+          <h1 style="font-size: 15px; margin: 0" id="staff-sidebar-name">
+            Staff Member
+          </h1>
+          <div style="font-size: 12px; color: var(--muted)">Staff Panel</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#" data-target="dashboard" class="active">Dashboard</a>
+        <a href="#" data-target="schedule">My Schedule</a>
+        <a href="#" data-target="my-services">My Services</a>
+        <a href="#" data-target="clients">My Clients</a>
+        <a href="#" data-target="reviews">My Reviews</a>
+        <a href="#" data-target="profile">Profile</a>
+      </nav>
+    </aside>
+    <div class="overlay"></div>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="top-left">
+          <button class="hamburger" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
+          <div class="brand-top" aria-hidden="true">
+            <div class="logo" id="staff-logo-top"></div>
+            <div>
+              <h1 style="font-size: 15px; margin: 0" id="staff-brand-top-name">
+                Staff
+              </h1>
+              <div style="font-size: 12px; color: var(--muted)">
+                Staff Panel
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center">
+          <div class="muted" id="dateTime"></div>
+          <button class="btn logout">Logout</button>
+        </div>
+      </div>
+
+      <section id="dashboard-content" class="page-content active">
+        <div class="welcome" style="margin-bottom: 24px">
+          <div class="avatar" id="staff-avatar"></div>
+          <div>
+            <h2 id="staff-welcome-name">Welcome back 👋</h2>
+            <p id="subText">Here is your schedule for today.</p>
+          </div>
+          <div class="dashboard-actions">
+            <button id="showNewBookingModalBtn" class="btn btn-primary">
+              &#43; New Appointment
+            </button>
+          </div>
+        </div>
+        <div class="dashboard-grid">
+          <div class="card">
+            <div class="k">Today's Appointments</div>
+            <div class="v" id="todaysAppointments">_</div>
+            <div class="muted">
+              Next Client: <span id="nextClientInfo">_</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="k">Upcoming This Week</div>
+            <div class="v" id="weeklyAppointments">_</div>
+            <div class="muted">Total appointments</div>
+          </div>
+
+          <div class="card">
+            <div class="k">My Average Rating</div>
+            <div class="v" id="myAvgRating">_</div>
+            <div class="muted">
+              From <span id="myTotalReviews">_</span> reviews
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>My Weekly Availability</h2>
+            <div
+              id="dashboardAvailabilityList"
+              class="dashboard-availability"
+            ></div>
+          </div>
+
+          <div class="card">
+            <h2>Recent Activity</h2>
+            <div id="activityFeedList" class="activity-feed-container"></div>
+          </div>
+
+          <div class="card card-full-width">
+            <h2>Today's Schedule</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Client</th>
+                  <th>Service</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="todaysScheduleTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="schedule-content" class="page-content">
+        <div class="section">
+          <h2>My Upcoming Appointments</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Client</th>
+                <th>Service</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="myAppointmentsTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="clients-content" class="page-content">
+        <div class="section">
+          <h2>My Client List</h2>
+          <div class="search-bar-container">
+            <input
+              type="text"
+              id="clientsPageSearchInput"
+              placeholder="Search by client name or phone..."
+            />
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Last Visit</th>
+                <th>Next Appointment</th>
+              </tr>
+            </thead>
+            <tbody id="myClientsTable"></tbody>
+          </table>
+        </div>
+        <div id="clientsPagination" class="pagination-controls"></div>
+      </section>
+
+      <section id="client-detail-content" class="page-content">
+        <div class="section">
+          <a
+            href="#"
+            class="btn secondary back-to-clients"
+            data-target="clients"
+          >
+            &larr; Back to Client List
+          </a>
+
+          <div class="client-detail-header">
+            <h2 id="clientDetailName"></h2>
+            <span id="clientDetailPhone"></span>
+          </div>
+
+          <h3>Appointment History</h3>
+          <div
+            id="clientDetailHistoryList"
+            class="client-history-container"
+          ></div>
+        </div>
+      </section>
+
+      <section id="reviews-content" class="page-content">
+        <div class="section">
+          <h2>Feedback From My Clients</h2>
+          <div class="search-bar-container">
+            <input
+              type="text"
+              id="reviewsPageSearchInput"
+              placeholder="Search by comment content..."
+            />
+          </div>
+          <div
+            class="avg-rating"
+            id="myAvgRatingFull"
+            style="margin-bottom: 16px; font-size: 1.2rem"
+          ></div>
+          <div id="myReviewsList"></div>
+          <div id="reviewsPagination" class="pagination-controls"></div>
+        </div>
+      </section>
+
+      <section id="profile-content" class="page-content">
+        <div class="section">
+          <h2>My Profile</h2>
+          <form id="profileForm">
+            <div class="form-group">
+              <label>Name</label><input type="text" id="staffName" disabled />
+            </div>
+            <div class="form-group">
+              <label>Specialty</label
+              ><input type="text" id="staffSpecialty" disabled />
+            </div>
+            <div class="form-group">
+              <label>Bio</label
+              ><textarea id="staffBio" rows="4" disabled>
+Expert stylist with 5+ years of experience in modern hair cutting and coloring techniques.</textarea
+              >
+            </div>
+            <div class="actions">
+              <button type="button" id="editBtn" class="btn">Edit</button>
+              <button
+                type="submit"
+                id="saveBtn"
+                class="btn"
+                style="display: none"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="section">
+          <h2>Password Reset</h2>
+          <form id="passwordForm">
+            <div class="form-group">
+              <label for="currentPassword">Current Password</label>
+              <input type="password" id="currentPassword" />
+            </div>
+            <div class="form-group">
+              <label for="newPassword">New Password</label>
+              <input type="password" id="newPassword" />
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm New Password</label>
+              <input type="password" id="confirmPassword" />
+            </div>
+            <button type="submit" class="btn">Update Password</button>
+          </form>
+        </div>
+        <div class="section">
+          <h2>My Weekly Availability</h2>
+          <form id="availabilityForm">
+            <p>
+              Set your working hours for each day. Check "Off" to mark the day
+              as unavailable.
+            </p>
+
+            <div class="availability-grid">
+              <div class="grid-header">Day</div>
+              <div class="grid-header">Off</div>
+              <div class="grid-header">Start Time</div>
+              <div class="grid-header">End Time</div>
+
+              <div class="day-row" data-day="Sunday">
+                <label for="sun-off">Sunday</label>
+                <input type="checkbox" id="sun-off" name="isOff" />
+                <input type="time" name="startTime" />
+                <input type="time" name="endTime" />
+              </div>
+              <div class="day-row" data-day="Monday">
+                <label for="mon-off">Monday</label>
+                <input type="checkbox" id="mon-off" name="isOff" />
+                <input type="time" name="startTime" />
+                <input type="time" name="endTime" />
+              </div>
+              <div class="day-row" data-day="Tuesday">
+                <label for="tue-off">Tuesday</label>
+                <input type="checkbox" id="tue-off" name="isOff" />
+                <input type="time" name="startTime" />
+                <input type="time" name="endTime" />
+              </div>
+              <div class="day-row" data-day="Wednesday">
+                <label for="wed-off">Wednesday</label>
+                <input type="checkbox" id="wed-off" name="isOff" />
+                <input type="time" name="startTime" />
+                <input type="time" name="endTime" />
+              </div>
+              <div class="day-row" data-day="Thursday">
+                <label for="thu-off">Thursday</label>
+                <input type="checkbox" id="thu-off" name="isOff" />
+                <input type="time" name="startTime" />
+                <input type="time" name="endTime" />
+              </div>
+              <div class="day-row" data-day="Friday">
+                <label for="fri-off">Friday</label>
+                <input type="checkbox" id="fri-off" name="isOff" />
+                <input type="time" name="startTime" />
+                <input type="time" name="endTime" />
+              </div>
+              <div class="day-row" data-day="Saturday">
+                <label for="sat-off">Saturday</label>
+                <input type="checkbox" id="sat-off" name="isOff" />
+                <input type="time" name="startTime" />
+                <input type="time" name="endTime" />
+              </div>
+            </div>
+            <button type="submit" class="btn" style="margin-top: 20px">
+              Save Availability
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section id="my-services-content" class="page-content">
+        <div class="section">
+          <h2>My Assigned Services</h2>
+          <div class="search-bar-container">
+            <input
+              type="text"
+              id="servicesPageSearchInput"
+              placeholder="Search by service name or description..."
+            />
+          </div>
+          <p>This is a list of all services you are qualified to perform.</p>
+          <div id="myServicesList" class="services-list-container">
+            <p>Loading your services...</p>
+          </div>
+          <div id="servicesPagination" class="pagination-controls"></div>
+        </div>
+      </section>
+
+      <div id="rescheduleModal" class="modal-overlay" style="display: none">
+        <div class="modal-content">
+          <button id="rescheduleModalClose" class="modal-close-btn">
+            &times;
+          </button>
+          <h3>Reschedule Appointment</h3>
+          <p>
+            You are rescheduling: <strong id="rescheduleClientName"></strong>
+          </p>
+
+          <form id="rescheduleForm">
+            <input type="hidden" id="rescheduleBookingId" />
+
+            <div class="form-group">
+              <label for="rescheduleDate">New Date</label>
+              <input type="date" id="rescheduleDate" required />
+            </div>
+
+            <div class="form-group">
+              <label for="rescheduleTime">New Time Slot</label>
+              <input type="time" id="rescheduleTime" required />
+            </div>
+
+            <div class="actions">
+              <button
+                type="button"
+                id="rescheduleModalCancel"
+                class="btn secondary"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="btn">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="notesModal" class="modal-overlay" style="display: none">
+        <div class="modal-content">
+          <button id="notesModalClose" class="modal-close-btn">&times;</button>
+          <h3>Appointment Notes</h3>
+          <p>For client: <strong id="notesClientName"></strong></p>
+
+          <form id="notesForm">
+            <input type="hidden" id="notesBookingId" />
+            <div class="form-group">
+              <label for="bookingNotes"
+                >Notes (e.g., color formulas, client preferences)</label
+              >
+              <textarea id="bookingNotes" rows="6"></textarea>
+            </div>
+
+            <div class="actions">
+              <button type="button" id="notesModalCancel" class="btn secondary">
+                Cancel
+              </button>
+              <button type="submit" class="btn">Save Notes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="newBookingModal" class="modal-overlay" style="display: none">
+        <div class="modal-content">
+          <button id="newBookingModalClose" class="modal-close-btn">
+            &times;
+          </button>
+          <h3>New Appointment</h3>
+
+          <form id="newBookingForm">
+            <input type="hidden" id="bookingServiceId" />
+            <input type="hidden" id="bookingClientId" />
+
+            <div id="bookingStep1" class="booking-step">
+              <div id="clientSearchContainer">
+                <div class="form-group">
+                  <label for="clientSearchInput">Search for Client</label>
+                  <input
+                    type="text"
+                    id="clientSearchInput"
+                    placeholder="Start typing name or phone..."
+                  />
+                  <div id="clientSearchResults" class="search-results"></div>
+                </div>
+                <div class="or-divider">
+                  <span>OR</span>
+                  <button
+                    type="button"
+                    id="showNewClientFormBtn"
+                    class="btn-link"
+                  >
+                    Create New Client
+                  </button>
+                </div>
+              </div>
+
+              <div id="newClientFormContainer" style="display: none">
+                <h4>New Client Details</h4>
+                <div class="form-group">
+                  <label for="newClientName">Name</label>
+                  <input type="text" id="newClientName" />
+                </div>
+                <div class="form-group">
+                  <label for="newClientPhone">Phone Number</label>
+                  <input type="tel" id="newClientPhone" />
+                </div>
+                <div class="form-group">
+                  <label for="newClientEmail">Email (Optional)</label>
+                  <input type="email" id="newClientEmail" />
+                </div>
+                <div class="actions">
+                  <button
+                    type="button"
+                    id="cancelNewClientBtn"
+                    class="btn secondary"
+                  >
+                    Cancel
+                  </button>
+                  <button type="button" id="saveNewClientBtn" class="btn">
+                    Save Client
+                  </button>
+                </div>
+              </div>
+
+              <div
+                class="selected-client-info"
+                id="selectedClientDisplay"
+                style="display: none"
+              >
+                <strong>Client:</strong> <span id="selectedClientName"></span>
+                <button type="button" id="changeClientBtn" class="btn-link">
+                  Change
+                </button>
+              </div>
+            </div>
+
+            <div id="bookingStep2" class="booking-step" style="display: none">
+              <div class="form-group">
+                <label for="serviceSelect">Select Service</label>
+                <select id="serviceSelect">
+                  <option value="">-- Please select a service --</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="bookingStep3" class="booking-step" style="display: none">
+              <div class="form-group">
+                <label for="bookingDateSelect">Select Date</label>
+                <input type="date" id="bookingDateSelect" />
+              </div>
+              <div class="form-group">
+                <label>Select Time Slot</label>
+                <div id="bookingTimeSlots" class="time-slot-container">
+                  <p class="muted">Please select a service and date first.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="actions modal-actions">
+              <button type="button" id="newBookingCancel" class="btn secondary">
+                Cancel
+              </button>
+              <button type="submit" id="newBookingSubmit" class="btn" disabled>
+                Create Booking
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Review Reply Modal -->
+      <div id="reviewReplyModal" class="modal-overlay" style="display: none">
+        <div class="modal-content">
+          <button id="reviewReplyModalClose" class="modal-close-btn">
+            &times;
+          </button>
+          <h3>Reply to Review</h3>
+
+          <form id="reviewReplyForm">
+            <input type="hidden" id="replyReviewId" />
+
+            <div class="form-group">
+              <label>Your Reply</label>
+              <textarea id="replyText" rows="5"></textarea>
+            </div>
+
+            <div class="actions">
+              <button
+                type="button"
+                id="reviewReplyModalCancel"
+                class="btn secondary"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="btn">Submit Reply</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <div id="notification-toast" class="toast">
+      <span id="notification-message"></span>
+    </div>
+    <!-- ============================================= -->
+    <!-- ==         SUPPORT CHAT MODAL              == -->
+    <!-- ============================================= -->
+    <div id="chat-widget-container">
+      <!-- The button to open the chat -->
+      <button id="chat-open-btn" class="chat-bubble">
+        <!-- (You can use the same SVG icon as the customer) -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M2.25 12.76c.243 1.27 1.03 2.4 2.11 3.093l.3.188A19.5 19.5 0 0 0 12 19.5c.99 0 1.953-.138 2.86-.399l.3-.093a6.8 6.8 0 0 0 2.11-3.093m0-3.48a6.8 6.8 0 0 0-2.11-3.093l-.3-.093A19.5 19.5 0 0 0 12 4.5c-.99 0-1.953.138-2.86.399l-.3.093a6.8 6.8 0 0 0-2.11 3.093m16.5 3.48 0 0-.001.001 0 0 0 0m-16.5 0 0 0 .001.001 0 0 0 0M12 21a8.25 8.25 0 0 0 8.25-8.25c0-1.55-.422-2.99-.133-4.329a.75.75 0 0 0-1.21-.523l-.31.31a19.488 19.488 0 0 1-3.606 2.153 6.73 6.73 0 0 1-3.04.628 6.73 6.73 0 0 1-3.04-.628A19.488 19.488 0 0 1 5.023 7.7a.75.75 0 0 0-1.21.523C3.672 9.56 3.25 10.999 3.25 12.54A8.25 8.25 0 0 0 12 21Z"
+          />
+        </svg>
+        <span id="chat-notification-dot" class="chat-dot-hidden"></span>
+      </button>
+
+      <!-- The chat modal itself (hidden by default) -->
+      <div id="chat-modal" class="chat-modal-hidden chat-modal-admin">
+        <!-- Left Column: Conversation List -->
+        <div class="chat-sidebar">
+          <div class="chat-header">
+            <h3>Active Chats</h3>
+          </div>
+          <div id="chat-user-list" class="chat-user-list">
+            <p class="muted">No active chats.</p>
+          </div>
+        </div>
+
+        <!-- Right Column: Message Window -->
+        <div class="chat-main">
+          <div class="chat-header">
+            <h3 id="chat-with-name">Select a chat</h3>
+            <button id="chat-close-btn" class="chat-close">&times;</button>
+          </div>
+          <div id="chat-messages" class="chat-messages">
+            <!-- Messages will be added here -->
+          </div>
+          <form id="chat-form" class="chat-form">
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Type your reply..."
+              autocomplete="off"
+              disabled
+            />
+            <button type="submit" class="btn-send" disabled>Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="/js/config.js"></script>
+    <script src="/js/staff.js"></script>
+  </body>
+</html>

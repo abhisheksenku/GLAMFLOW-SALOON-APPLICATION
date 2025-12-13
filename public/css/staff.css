@@ -1,0 +1,1246 @@
+/* FONT IMPORT */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap");
+
+/* CSS VARIABLES */
+:root {
+  --primary: #ff6b81; /* A vibrant pink */
+  --primary-light: #fce4ec;
+  --primary-dark: #e63950;
+  --secondary: #6c5ce7;
+  --secondary-hover: #5243c0;
+  --background: #f8f9fa;
+  --surface: #ffffff;
+  --text-color: #212529;
+  --muted: #6c757d;
+  --border-color: #dee2e6;
+  --success: #198754;
+  --danger: #dc3545;
+  --warning: #ffc107;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* GENERAL RESET & DEFAULTS */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--background);
+  color: var(--text-color);
+  font-size: 16px;
+  line-height: 1.5;
+  display: flex;
+}
+
+/* LAYOUT: SIDEBAR & MAIN */
+.sidebar {
+  width: 240px;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 12px;
+  transition: transform 0.3s ease-in-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1000;
+}
+
+.main {
+  flex-grow: 1;
+  margin-left: 240px;
+  padding: 24px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* SIDEBAR CONTENT */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px 24px 12px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 18px;
+}
+.logo {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.nav a {
+  text-decoration: none;
+  color: var(--text-color);
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s;
+}
+.nav a:hover {
+  background-color: var(--primary-light);
+}
+.nav a.active {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.top-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.hamburger {
+  display: none;
+}
+.brand-top {
+  display: none;
+}
+
+/* MAIN CONTENT SECTIONS */
+.section {
+  background-color: var(--surface);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+.section h2 {
+  margin-bottom: 18px;
+  font-size: 1.5rem;
+}
+
+/* DASHBOARD STYLES */
+.dashboard-grid {
+  display: grid;
+  /* This creates a 3-column grid */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.card.card-full-width {
+  grid-column: 1 / -1; /* Span from first to last column */
+}
+.welcome {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+.welcome h2 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+.welcome p {
+  margin: 0;
+  color: var(--muted);
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  /* Add this, so cards with long content stretch */
+  height: 100%; 
+}
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.25rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+.card .k {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.card .v {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.card .muted {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* FORMS & BUTTONS */
+.btn {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+.btn:hover {
+  opacity: 0.9;
+}
+.btn.secondary {
+  background: #e9ecef;
+  color: var(--text-color);
+}
+.btn.secondary:hover {
+  background: #dee2e6;
+}
+.btn.logout {
+  background-color: var(--danger);
+}
+.btn.logout:hover {
+  background-color: #b02a37;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-group label {
+  font-weight: 600;
+}
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="password"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+}
+
+/* TABLES */
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+th {
+  font-weight: 700;
+  background-color: #f8f9fa;
+}
+tbody tr:hover {
+  background-color: #f1f3f5;
+}
+.status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.status.completed {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+.status.confirmed {
+  background-color: #cff4fc;
+  color: #055160;
+}
+.status.cancelled {
+  background-color: #f8d7da;
+  color: #58151c;
+}
+
+/* REVIEWS */
+.review {
+  border-left: 4px solid var(--primary-light);
+  padding: 16px;
+  margin-bottom: 12px;
+  background: #fafafa;
+}
+.review-rating {
+  color: var(--warning);
+  font-size: 1.2rem;
+}
+.review-comment {
+  margin-top: 8px;
+}
+
+/* SINGLE PAGE APP STYLES */
+.page-content {
+  display: none;
+}
+.page-content.active {
+  display: block;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-240px);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+  .main {
+    margin-left: 0;
+  }
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .hamburger span {
+    width: 30px;
+    height: 3px;
+    background: var(--text-color);
+    border-radius: 5px;
+  }
+  .brand-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .overlay.open {
+    display: block;
+  }
+}
+/* ======================================= */
+/* ==   My Services Page Styles         == */
+/* ======================================= */
+
+/* This is the main container you added in the HTML */
+.services-list-container {
+  display: grid;
+  /* Creates a 2-column grid, but you can change '2' to '3' */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px; /* Space between the cards */
+}
+.service-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.service-card h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: var(--primary);
+}
+
+.service-card p {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  color: var(--muted);
+  flex-grow: 1; /* Pushes the footer to the bottom */
+}
+.service-card-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  font-family: var(--font-mono);
+  border-top: 1px dashed var(--border-color);
+  padding-top: 12px;
+}
+
+
+/* ======================================= */
+/* ==   Notification Toast Styles       == */
+/* ======================================= */
+
+.toast {
+  position: fixed; /* Floats over content, doesn't push layout */
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -150%); /* Starts hidden above the screen */
+  padding: 16px 24px;
+  border-radius: 0 0 8px 8px; /* Nice rounded bottom corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-weight: 600;
+  z-index: 9999;
+  transition: transform 0.4s ease-in-out;
+  min-width: 300px;
+  text-align: center;
+}
+
+/* Class to slide the notification in */
+.toast.show {
+  transform: translate(-50%, 0); /* Slides it down to view */
+}
+
+/* Success (default) style */
+.toast.success {
+  background-color: #28a745; /* Green */
+  color: white;
+}
+
+/* Error style */
+.toast.error {
+  background-color: #dc3545; /* Red */
+  color: white;
+}
+/* ======================================= */
+/* ==   Reschedule Modal Styles         == */
+/* ======================================= */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: var(--background);
+  padding: 24px 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+  animation: modal-fade-in 0.3s ease-out;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.modal-content p {
+  margin-top: 0;
+  margin-bottom: 24px;
+  color: var(--muted);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--muted);
+  cursor: pointer;
+  line-height: 1;
+}
+.modal-close-btn:hover {
+  color: var(--text);
+}
+
+
+/* ======================================= */
+/* ==   Icon Button Styles              == */
+/* ======================================= */
+
+.actions-cell {
+  display: flex;
+  gap: 8px;
+}
+
+.btn.icon-btn {
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  color: var(--muted);
+  padding: 8px 10px;
+  font-size: 1.1rem; /* Makes emoji bigger */
+  line-height: 1;
+  border-radius: 6px;
+}
+
+.btn.icon-btn:hover {
+  background: var(--border-color);
+  color: var(--text);
+  border-color: var(--muted);
+}
+/* ======================================= */
+/* ==   Client List & Detail Styles     == */
+/* ======================================= */
+
+/* Make client name link look good in the table */
+a.client-detail-link {
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+}
+a.client-detail-link:hover {
+  text-decoration: underline;
+}
+
+/* "Back" button styling */
+.back-to-clients {
+  margin-bottom: 24px;
+  display: inline-block; /* Makes margin-bottom work */
+}
+
+/* Client detail header */
+.client-detail-header {
+  margin-bottom: 32px;
+}
+.client-detail-header h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 2rem;
+}
+.client-detail-header span {
+  font-size: 1.1rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+/* Container for all history items */
+.client-history-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* A single history item card */
+.history-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden; /* To contain the header's background */
+}
+
+.history-item-header {
+  background: var(--bg-main);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* For small screens */
+  gap: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.history-item-header strong {
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+/* Notes section of the card */
+.history-item-notes {
+  padding: 16px;
+}
+.history-item-notes strong {
+  color: var(--text);
+}
+.history-item-notes p {
+  margin: 4px 0 0 0;
+  color: var(--muted);
+  white-space: pre-wrap; /* Respects line breaks in notes */
+  font-style: italic;
+}
+/* ======================================= */
+/* ==   Availability Form Styles        == */
+/* ======================================= */
+
+/* Creates a nice 2-column layout for time inputs */
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+.form-row .form-group {
+  flex: 1; /* Each group takes up 50% */
+}
+
+/* Container for the day-of-week checkboxes */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping on small screens */
+  gap: 12px;
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* Style for each individual checkbox item wrapper */
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between checkbox and label */
+  border: 1px solid transparent; /* Placeholder for hover/checked */
+  border-radius: 6px;
+  padding: 8px 12px;
+  transition: background-color 0.2s;
+  user-select: none; /* Prevents text selection on click */
+}
+
+.checkbox-item:hover {
+  background-color: var(--border-color);
+}
+
+/* Style for the checkbox itself */
+.checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary); /* Modern way to color checkboxes */
+  cursor: pointer;
+}
+
+/* Style for the label */
+.checkbox-item label {
+  cursor: pointer;
+  color: var(--text);
+}
+
+/* Style the wrapper when the checkbox is checked (using :has) */
+/* This is optional but looks very professional */
+.checkbox-item:has(input[type="checkbox"]:checked) {
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+}
+/* ======================================= */
+/* ==   Dashboard Availability Widget   == */
+/* ======================================= */
+.availability-item {
+  display: flex;
+  justify-content: space-between; /* Day on left, time on right */
+  font-size: 0.9rem;
+  color: var(--text);
+  padding: 4px 0;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.availability-item:last-child {
+  border-bottom: none;
+}
+
+.availability-item strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.availability-item span {
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+.availability-item span:first-child {
+  color: var(--danger); /* Style for "Off" */
+  font-weight: 600;
+}
+
+
+/* ======================================= */
+/* ==   New Availability Grid Styles    == */
+/* ======================================= */
+
+.availability-grid {
+  display: grid;
+  /* Columns: Day | Off | Start | End */
+  grid-template-columns: 120px 50px 1fr 1fr;
+  gap: 16px 12px; /* Row gap | Column gap */
+  border: 1px solid var(--border-color);
+  background: var(--bg-main);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.grid-header {
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+/* Center the "Off" column header */
+.grid-header:nth-child(2) {
+  text-align: center;
+}
+
+/* This is a CSS trick to make each .day-row act as a sub-grid */
+.day-row {
+  display: contents; 
+}
+
+.day-row label {
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  color: var(--text);
+}
+
+.day-row input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary);
+  margin: 0;
+  justify-self: center; /* Center horizontally in the grid cell */
+  align-self: center; /* Center vertically */
+  cursor: pointer;
+}
+
+.day-row input[type="time"] {
+  width: 100%;
+  padding: 10px 8px;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+/* Style for rows that are marked "Off" */
+.day-row.is-off label {
+  color: var(--muted);
+}
+
+.day-row.is-off input[type="time"] {
+  background-color: var(--border-color);
+  opacity: 0.6;
+}
+/* ======================================= */
+/* ==   Dashboard Actions               == */
+/* ======================================= */
+
+/* .dashboard-actions {
+
+} */
+
+/* Make the primary button stand out */
+.btn.btn-primary {
+  background-color: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+.btn.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+/* ======================================= */
+/* ==   New Booking Modal Styles        == */
+/* ======================================= */
+
+/* Client Search Results */
+.search-results {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-top: 8px;
+  background: var(--bg-main);
+}
+
+.result-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s;
+}
+.result-item:last-child {
+  border-bottom: none;
+}
+.result-item:hover {
+  background-color: var(--border-color);
+}
+.result-item strong {
+  color: var(--text);
+}
+.result-item span {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  margin-left: 8px;
+}
+
+/* Selected Client Display */
+.selected-client-info {
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  padding: 12px 16px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Time Slot Container */
+.time-slot-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.time-slot-btn {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.time-slot-btn:hover {
+  background-color: var(--border-color);
+}
+.time-slot-btn.selected {
+  background-color: var(--primary);
+  color: #fff;
+  border-color: var(--primary-dark);
+  font-weight: 600;
+}
+/* ======================================= */
+/* ==   Activity Feed Styles            == */
+/* ======================================= */
+
+.activity-feed-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+  /* REMOVE background, border, and padding */
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--border-color);
+}
+.activity-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.activity-icon {
+  font-size: 1.5rem;
+  background-color: var(--bg-card);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* Prevents icon from shrinking */
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-text {
+  margin: 0 0 4px 0;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+.activity-text strong {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.activity-time {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+/* ======================================= */
+/* ==   Pagination Styles               == */
+/* ======================================= */
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.pagination-controls button {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pagination-controls button:hover {
+  background: var(--border-color);
+  border-color: var(--muted);
+}
+.pagination-controls button:disabled {
+  background: var(--bg-main);
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.pagination-controls button.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+.pagination-controls span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 0 8px;
+}
+/*==================================*/
+/* In staff.css */
+
+.or-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 16px 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.or-divider:not(:empty)::before {
+  margin-right: .25em;
+}
+
+.or-divider:not(:empty)::after {
+  margin-left: .25em;
+}
+
+.or-divider .btn-link {
+  font-size: 0.9rem;
+}
+
+#newClientFormContainer h4 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+}
+/* ======================================= */
+/* ==   Search Bar Styles               == */
+/* ======================================= */
+
+.search-bar-container {
+  margin-bottom: 20px;
+}
+
+.search-bar-container input[type="text"] {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-main);
+  color: var(--text);
+  box-sizing: border-box; /* Important */
+}
+.search-bar-container input[type="text"]:focus {
+  border-color: var(--primary);
+  background-color: var(--bg-card);
+  outline: none;
+}
+/* ======================================= */
+/* ==   SUPPORT CHAT STYLES             == */
+/* ======================================= */
+#chat-widget-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+}
+
+.chat-bubble {
+  background-color: var(--primary);
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-out;
+  position: relative; /* For the dot */
+}
+.chat-bubble:hover {
+  transform: scale(1.1);
+  background-color: var(--primary-dark);
+}
+.chat-bubble svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* Notification Dot */
+.chat-dot-hidden {
+  display: none;
+}
+#chat-notification-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 14px;
+  height: 14px;
+  background-color: #ffc107; /* Bright yellow */
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Chat Modal */
+.chat-modal-hidden {
+  display: none;
+}
+
+#chat-modal.chat-modal-visible {
+  display: flex; /* <-- Now a flex container */
+  /* width: 600px; /* Wider for two columns */
+  height: 500px;
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  bottom: 80px; /* Position above the bubble */
+  right: 0;
+  overflow: hidden;
+  animation: modal-fade-in 0.3s ease-out;
+}
+
+.chat-sidebar {
+  width: 200px;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-main);
+}
+.chat-main {
+  flex: 1; /* Takes up the rest of the space */
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  flex-shrink: 0;
+}
+.chat-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chat-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  font-weight: 300;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.8;
+}
+.chat-close:hover {
+  opacity: 1;
+}
+
+/* List of users in sidebar */
+.chat-user-list {
+  flex: 1;
+  overflow-y: auto;
+}
+.chat-user-list .muted {
+  padding: 16px;
+  font-size: 0.9rem;
+}
+.chat-user-item {
+  padding: 16px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+}
+.chat-user-item:hover {
+  background-color: #fff;
+}
+.chat-user-item.active {
+  background-color: var(--primary-light);
+  font-weight: 600;
+}
+.chat-user-item .unread-dot {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: var(--primary);
+  border-radius: 50%;
+}
+
+/* Chat messages area */
+.chat-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.message-support {
+  background: var(--border-color);
+  color: var(--text-color);
+  padding: 10px 14px;
+  border-radius: 16px 16px 16px 4px;
+  align-self: flex-start;
+  max-width: 80%;
+}
+.message-user {
+  background: var(--primary);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 16px 16px 4px 16px;
+  align-self: flex-end;
+  max-width: 80%;
+}
+
+.chat-form {
+  display: flex;
+  border-top: 1px solid var(--border-color);
+  padding: 12px;
+}
+#chat-input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  background: var(--bg-card);
+  border-radius: 8px 0 0 8px;
+}
+#chat-input:disabled {
+  background-color: var(--bg-main);
+  cursor: not-allowed;
+}
+.btn-send:disabled {
+  background: var(--muted);
+  cursor: not-allowed;
+}

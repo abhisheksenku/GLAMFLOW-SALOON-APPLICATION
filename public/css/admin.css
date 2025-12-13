@@ -1,0 +1,1106 @@
+/* FONT IMPORT */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap");
+
+/* CSS VARIABLES */
+:root {
+  --primary: #ff6b81; /* A vibrant pink */
+  --primary-light: #fce4ec;
+  --primary-dark: #e63950;
+  --secondary: #6c5ce7;
+  --secondary-hover: #5243c0;
+  --background: #f8f9fa;
+  --surface: #ffffff;
+  --text-color: #212529;
+  --muted: #6c757d;
+  --border-color: #dee2e6;
+  --success: #198754;
+  --danger: #dc3545;
+  --warning: #ffc107;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --bg-card: #fff;
+}
+
+/* GENERAL RESET & DEFAULTS */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--background);
+  color: var(--text-color);
+  font-size: 16px;
+  line-height: 1.5;
+  display: flex;
+}
+
+/* LAYOUT: SIDEBAR & MAIN */
+.sidebar {
+  width: 240px;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 12px;
+  transition: transform 0.3s ease-in-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1000;
+}
+
+.main {
+  flex-grow: 1;
+  margin-left: 240px;
+  padding: 24px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* SIDEBAR CONTENT */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px 24px 12px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 18px;
+}
+.logo {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.nav a {
+  text-decoration: none;
+  color: var(--text-color);
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s;
+}
+.nav a:hover {
+  background-color: var(--primary-light);
+}
+.nav a.active {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* TOPBAR */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: var(--surface);
+  padding: 16px;
+
+  display: flex;              
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.top-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.hamburger {
+  display: none;
+}
+.brand-top {
+  display: none;
+}
+
+/* MAIN CONTENT SECTIONS */
+.section {
+  background-color: var(--surface);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+.section h2 {
+  margin-bottom: 18px;
+  font-size: 1.5rem;
+}
+
+/* HOME PAGE (DASHBOARD) STYLES */
+.welcome {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+.welcome h2 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+.welcome p {
+  margin: 0;
+  color: var(--muted);
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.card {
+  background-color: var(--surface);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.card .k {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.card .v {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+.card .muted {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* FORMS & BUTTONS */
+.btn {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+.btn:hover {
+  opacity: 0.9;
+}
+.btn.secondary {
+  background: #e9ecef;
+  color: var(--text-color);
+}
+.btn.secondary:hover {
+  background: #dee2e6;
+}
+.btn.logout {
+  background-color: var(--danger);
+}
+.btn.logout:hover {
+  background-color: #b02a37;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-group label {
+  font-weight: 600;
+}
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+}
+
+/* FILTERS & TABLES */
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+th {
+  font-weight: 700;
+  background-color: #f8f9fa;
+}
+tbody tr:hover {
+  background-color: #f1f3f5;
+}
+.status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.status.paid,
+.status.completed {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+.status.confirmed {
+  background-color: #cff4fc;
+  color: #055160;
+}
+.status.cancelled {
+  background-color: #f8d7da;
+  color: #58151c;
+}
+
+/* SERVICES & STAFF CARDS */
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+.service-card {
+  background: var(--surface);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.service-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.service-card-content {
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.service-card-content h3 {
+  margin-bottom: 8px;
+}
+.service-card-content p {
+  color: var(--muted);
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+.service-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.service-card-price {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+.service-sub-view {
+  display: none; /* Hide both views by default */
+}
+
+.service-sub-view.active {
+  display: block; /* Show only the active sub-view */
+}
+/* FEEDBACK / REVIEWS */
+.review {
+  border-left: 4px solid var(--primary-light);
+  padding: 16px;
+  margin-bottom: 12px;
+  background: #fafafa;
+}
+.review-rating {
+  color: var(--warning);
+  font-size: 1.2rem;
+}
+.review-comment {
+  margin-top: 8px;
+}
+
+/* SINGLE PAGE APP STYLES */
+.page-content {
+  display: none; /* Hide all content sections by default */
+}
+.page-content.active {
+  display: block; /* Show only the active section */
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-240px);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+  .main {
+    margin-left: 0;
+  }
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .hamburger span {
+    width: 30px;
+    height: 3px;
+    background: var(--text-color);
+    border-radius: 5px;
+  }
+  .brand-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .overlay.open {
+    display: block;
+  }
+}
+
+/* ADMIN-SPECIFIC ADDITIONS */
+.chart-placeholder {
+  height: 250px;
+  background-color: #f0f0f0;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--muted);
+  font-style: italic;
+}
+.appt-actions button,
+.manage-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 1.1rem;
+}
+.appt-actions button:hover {
+  opacity: 0.7;
+}
+/* Specific styling for View button in table */
+.view-client-btn {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  border: none;
+  color: white;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-client-btn:hover {
+  
+  transform: translateY(-1px);
+}
+
+.view-client-btn:active {
+  transform: translateY(0);
+}
+
+.manage-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.manage-actions .btn {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+/* STYLES FOR ALL MODALS (CONFIRMATION, DETAILS, ETC.) */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    
+    /* These two lines hide it by default */
+    opacity: 0;
+    visibility: hidden;
+
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* This class is added by JavaScript to make the modal visible */
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-card {
+    background: var(--surface);
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.modal-footer {
+    padding: 16px 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid var(--border-color);
+}
+/* STYLES FOR THE NEW UI ELEMENTS */
+
+/* Style for red "danger" buttons */
+.btn.danger {
+    background: var(--danger); /* Overrides the default gradient */
+    color: white;
+}
+.btn.danger:hover {
+    background: #b02a37; /* A darker red for hover */
+    opacity: 1;
+}
+
+/* Container for the search bar and filters */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 18px;
+    flex-wrap: wrap; 
+}
+
+.search-container {
+    flex-grow: 1; 
+}
+
+/* Style for the search input field */
+input[type="search"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: "Inter", sans-serif;
+}
+
+/* Also add the new card-container style for the Staff page */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+/* Add this to the end of admin.css */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    z-index: 2000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    opacity: 0;
+    animation: fadeInOut 3s ease-in-out;
+}
+
+.notification.success {
+    background-color: var(--success);
+}
+
+.notification.error {
+    background-color: var(--danger);
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, 20px); }
+    10% { opacity: 1; transform: translate(-50%, 0); }
+    90% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, 20px); }
+}
+/* --- In-Page Form for Adding Services --- */
+.inline-form {
+  display: flex;         /* Arrange items horizontally */
+  flex-wrap: wrap;       /* Allow items to wrap to the next line */
+  
+  gap: 16px;             /* Space between form groups */
+  padding: 20px;         /* Padding inside the form container */
+  background-color: var(--background); /* Light background */
+  border-radius: 8px;      /* Rounded corners */
+  margin-bottom: 24px;   /* Space below the form */
+}
+
+.inline-form .form-group {
+  margin-bottom: 0;   /* Remove default bottom margin */
+  flex-grow: 1;       /* Allow groups to grow and fill space */
+  min-width: 150px;   /* Minimum width before wrapping */
+  display: flex;       /* Use flex for label/input alignment */
+  flex-direction: column; /* Stack label above input */
+  gap: 4px;            /* Small space between label and input */
+}
+
+.inline-form .form-group label {
+  font-size: 0.85rem;    /* Slightly smaller label */
+  font-weight: 600;
+  color: var(--muted);  /* Muted color for labels */
+}
+
+/* .inline-form .form-group input {
+  width: 100%; /* Makes inputs fill their container */
+
+.inline-form .form-group input[type="text"],
+.inline-form .form-group input[type="number"] {
+  width: 100%;
+  padding: 8px 10px; /* Adjust padding if needed */
+}
+
+/* This special class is for the button's container */
+.inline-form .form-group-button {
+  flex-grow: 0;      /* Stops the button's group from growing */
+  min-width: auto;   /* Allows it to be its natural size */
+}
+/* Ensure buttons align correctly */
+.inline-form .form-group-button button {
+  white-space: nowrap; /* Prevent button text from wrapping */
+}
+/* --- Toggle Switch CSS --- */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 28px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: var(--primary);
+}
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+.breadcrumbs {
+  font-size: 1.1rem; /* Adjust size as needed */
+  font-weight: 600;
+  color: var(--text-color); /* Use your primary text color */
+  margin-left: 16px; /* Space it from the hamburger */
+  display: flex; /* Helps align items if using links/separators */
+  align-items: center;
+  gap: 6px; /* Space between breadcrumb parts */
+}
+
+/* Style for clickable links within breadcrumbs */
+.breadcrumbs a {
+  color: var(--muted); /* Make non-current parts less prominent */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumbs a:hover {
+  color: var(--primary); /* Highlight on hover */
+  text-decoration: underline;
+}
+
+/* Style for the current/last item */
+.breadcrumbs span {
+  color: var(--text-color); /* Ensure current item is prominent */
+  font-weight: 600;
+}
+
+/* Optional: Style for separators */
+.breadcrumbs .separator {
+  color: var(--muted);
+  font-weight: normal;
+}
+.checkbox-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+.checkbox-list label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+/* ======================================= */
+/* ==   Booking Status Select Styles    == */
+/* ======================================= */
+
+/* The table cell holding the dropdown */
+td.status-cell {
+  vertical-align: middle; /* Aligns dropdown nicely */
+}
+
+/* Base style for the dropdown */
+.booking-status-select {
+  /* Remove default browser styling */
+  appearance: none;
+  -webkit-appearance: none;
+  
+  /* Box Model */
+  width: 100%;
+  min-width: 120px;
+  padding: 8px 12px;
+  
+  /* Font & Text */
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  
+  /* Border & Background */
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--bg-card);
+  
+  /* Other */
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+
+  /* Custom Dropdown Arrow */
+  /* This is a simple dark arrow. You can customize the 'fill' color. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 30px; /* Make space for the arrow */
+}
+
+/* Style for the dropdown options */
+.booking-status-select option {
+  font-weight: 500;
+}
+
+/* --- Status-Specific Colors --- */
+
+.booking-status-select.status-confirmed,
+.booking-status-select[value="confirmed"] {
+  /* Green */
+  color: #28a745;
+  border-color: #a3d9b1;
+}
+
+.booking-status-select.status-completed {
+  /* Blue */
+  color: #007bff;
+  border-color: #a0d3ff;
+}
+
+.booking-status-select.status-pending {
+  /* Orange */
+  color: #fd7e14;
+  border-color: #fecba1;
+}
+
+.booking-status-select.status-cancelled {
+  /* Red */
+  color: #dc3545;
+  border-color: #f5b0b7;
+}
+/* ======================================= */
+/* ==   SUPPORT CHAT STYLES             == */
+/* ======================================= */
+#chat-widget-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+}
+
+.chat-bubble {
+  background-color: var(--primary);
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-out;
+  position: relative; /* For the dot */
+}
+.chat-bubble:hover {
+  transform: scale(1.1);
+  background-color: var(--primary-dark);
+}
+.chat-bubble svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* Notification Dot */
+.chat-dot-hidden {
+  display: none;
+}
+#chat-notification-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 14px;
+  height: 14px;
+  background-color: #ffc107; /* Bright yellow */
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Chat Modal */
+.chat-modal-hidden {
+  display: none;
+}
+
+#chat-modal.chat-modal-visible {
+  display: flex; /* <-- Now a flex container */
+  /* width: 600px; /* Wider for two columns */
+  height: 500px;
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  bottom: 80px; /* Position above the bubble */
+  right: 0;
+  overflow: hidden;
+  animation: modal-fade-in 0.3s ease-out;
+}
+
+.chat-sidebar {
+  width: 200px;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-main);
+}
+.chat-main {
+  flex: 1; /* Takes up the rest of the space */
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  flex-shrink: 0;
+}
+.chat-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chat-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  font-weight: 300;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.8;
+}
+.chat-close:hover {
+  opacity: 1;
+}
+
+/* List of users in sidebar */
+.chat-user-list {
+  flex: 1;
+  overflow-y: auto;
+}
+.chat-user-list .muted {
+  padding: 16px;
+  font-size: 0.9rem;
+}
+.chat-user-item {
+  padding: 16px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+}
+.chat-user-item:hover {
+  background-color: #fff;
+}
+.chat-user-item.active {
+  background-color: var(--primary-light);
+  font-weight: 600;
+}
+.chat-user-item .unread-dot {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: var(--primary);
+  border-radius: 50%;
+}
+
+/* Chat messages area */
+.chat-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.message-support {
+  background: var(--border-color);
+  color: var(--text-color);
+  padding: 10px 14px;
+  border-radius: 16px 16px 16px 4px;
+  align-self: flex-start;
+  max-width: 80%;
+}
+.message-user {
+  background: var(--primary);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 16px 16px 4px 16px;
+  align-self: flex-end;
+  max-width: 80%;
+}
+
+.chat-form {
+  display: flex;
+  border-top: 1px solid var(--border-color);
+  padding: 12px;
+}
+#chat-input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  background: var(--bg-card);
+  border-radius: 8px 0 0 8px;
+}
+#chat-input:disabled {
+  background-color: var(--bg-main);
+  cursor: not-allowed;
+}
+.btn-send:disabled {
+  background: var(--muted);
+  cursor: not-allowed;
+}
+/* ======================================= */
+/* ==   Pagination Styles               == */
+/* ======================================= */
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.pagination-controls button {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pagination-controls button:hover {
+  background: var(--border-color);
+  border-color: var(--muted);
+}
+.pagination-controls button:disabled {
+  background: var(--bg-main);
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.pagination-controls button.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+.pagination-controls span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 0 8px;
+}
+/*==================================*/
+/* In staff.css */
+
+.or-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 16px 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.or-divider:not(:empty)::before {
+  margin-right: .25em;
+}
+
+.or-divider:not(:empty)::after {
+  margin-left: .25em;
+}
+
+.or-divider .btn-link {
+  font-size: 0.9rem;
+}
+.revenue-sub-view {
+  display: none; /* Hide both views by default */
+}
+.revenue-sub-view.active {
+  display: block; /* Show only the active one */
+}
+/* ======================================= */
+/* ==   Notification Toast Styles       == */
+/* ======================================= */
+
+.toast {
+  position: fixed; /* Floats over content, doesn't push layout */
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -150%); /* Starts hidden above the screen */
+  padding: 16px 24px;
+  border-radius: 0 0 8px 8px; /* Nice rounded bottom corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-weight: 600;
+  z-index: 9999;
+  transition: transform 0.4s ease-in-out;
+  min-width: 300px;
+  text-align: center;
+}
+
+/* Class to slide the notification in */
+.toast.show {
+  transform: translate(-50%, 0); /* Slides it down to view */
+}
+
+/* Success (default) style */
+.toast.success {
+  background-color: #28a745; /* Green */
+  color: white;
+}
+
+/* Error style */
+.toast.error {
+  background-color: #dc3545; /* Red */
+  color: white;
+}
